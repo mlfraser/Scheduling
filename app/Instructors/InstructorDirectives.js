@@ -17,7 +17,7 @@ instructorModule.directive('instructorList',[function(){
   }
 }]);
 
-instructorModule.directive('instructorItem',[function(globalFactory){
+instructorModule.directive('instructorItem',[function(){
   return {
     transclude: true,
     replace: true,
@@ -90,7 +90,7 @@ instructorModule.directive('semesterList',[function(){
     compile: function() {
         return {
             pre: function(scope, element, attrs) {
-                
+                scope.selectedSemester = 0;
                
             }
         }
@@ -98,12 +98,13 @@ instructorModule.directive('semesterList',[function(){
   }
 }]);
 
-instructorModule.directive('semesterItem',[function(globalFactory){
+instructorModule.directive('semesterItem',['globalFactory', function(globalFactory){
   return {
     transclude: true,
     replace: true,
     scope: {
-        semester: '='
+        semester: '=',
+        selectedSemester: '='
     },
     templateUrl: 'app/Instructors/semesterItem.html',
     compile: function() {
@@ -111,7 +112,14 @@ instructorModule.directive('semesterItem',[function(globalFactory){
             pre: function(scope, element, attrs) {
                 scope.semesterTime = scope.semester.semester;
                 scope.year = scope.semester.year;
+                scope.i = scope.semester.i;
                 
+                scope.changeSemester = function(i) {
+                    scope.selectedSemester = i;
+                    globalFactory.getInstructors(scope.semesterTime, scope.year).success(function(data){
+                        scope.$parent.$parent.$parent.instructorCtrl.instructors = data.success.result;
+                    });
+                };
                 }
             }
         }

@@ -20,5 +20,29 @@ shared.factory('globalFactory', ['$http', function($http) {
         });
     };
     
+    service.getRooms = function(semester, year) {
+        return $http({
+           url: 'app/Rooms/GetRooms.php',
+            method: 'GET',
+            params: {
+                semester: semester,
+                year: year
+            },
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+    };
+    
+    service.getLabs = function(semester, year) {
+        return $http({
+           url: 'app/Labs/GetLabs.php',
+            method: 'GET',
+            params: {
+                semester: semester,
+                year: year
+            },
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+    };
+    
     return service;
 }]);

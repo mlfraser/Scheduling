@@ -1,11 +1,11 @@
 var shared = angular.module('shared',                       ['ui.router', 'ngAnimate',  'ngTouch', 'ui.bootstrap']);
 var homeModule = angular.module('homeModule',               ['shared']);
-var labModule = angular.module('labModule',                 ['shared']);
+var labModule = angular.module('labModule',                 ['shared', 'ui.calendar']);
 var instructorModule = angular.module('instructorModule',   ['shared']);
-var roomModule = angular.module('roomModule',               ['shared']);
+var roomModule = angular.module('roomModule',               ['shared', 'ui.calendar']);
 var courseModule = angular.module('courseModule',           ['shared']);
 
-var app = angular.module('blue', ['shared', 'labModule', 'instructorModule', 'roomModule', 'courseModule', 'homeModule']);
+var app = angular.module('app', ['shared', 'labModule', 'instructorModule', 'roomModule', 'courseModule', 'homeModule']);
 
 app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider) {
     $locationProvider.html5Mode({
@@ -23,8 +23,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', functio
     }).state('labs', {
         url: "/labs",
         templateUrl: "app/Labs/lab.html",
-        controller: "TeamController",
-        controllerAs: "teamCtrl"
+        controller: "LabController",
+        controllerAs: "labCtrl"
     }).state('instructors', {
         url: "/instructors",
         templateUrl: "app/Instructors/instructor.html",
