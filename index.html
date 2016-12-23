@@ -1,67 +1,91 @@
-
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>ECE Scheduling</title>
-        <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/resources/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="/resources/css/styles.css">
-        <style type="text/css">
-            body{
-                padding-top: 70px;
-            }
-        </style>
-    </head>
-    <body ng-app="schedulingApp" ng-controller="ctrl">
-        <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <div class="navbar-brand" data-toggle="tab">ECE Scheduling</div>
-            </div>
-            <!-- Collection of nav links and other content for toggling -->
-            <div id="navbarCollapse" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active" id="homeTab"><a href="#homeView" class="nav nav-tabs" data-toggle="tab">Home</a></li>
-                    <li id="instructorTab"><a href="#instructorView" class="nav nav-tabs" data-toggle="tab">Instructor Schedule</a></li>
-                    <li id="labTab"><a href="#labView" class="nav nav-tabs" data-toggle="tab">Lab Schedule</a></li>
-                    <li id="classTab"><a href="#classView" class="nav nav-tabs" data-toggle="tab">Class Schedule</a></li>
-                    <li id="roomTab"><a href="#roomView" class="nav nav-tabs" data-toggle="tab">Room Schedule</a></li>
-                    <li id="settingsTab"><a href="#settingsView" class="nav nav-tabs" data-toggle="tab">Settings</a></li>
-                </ul>
-            </div>
-            
-        </nav>
-        
-        <div class="tab-content">
-            <div id="homeView" class="tab-pane fade in active">
-                <div ng-include="'/pages/home.php'"></div>
-            </div>
-            <div id="instructorView" class="tab-pane fade container">
-                <div ng-include="'/pages/instructors.php'"></div>
-            </div>
-            <div id="labView" class="tab-pane fade container">
-                <div ng-include="'/pages/labs.php'"></div>
-            </div>
-            <div id="classView" class="tab-pane fade container">
-                <div ng-include="'/pages/classes.php'"></div>
-            </div>
-            <div id="roomView" class="tab-pane fade container">
-                <div ng-include="'/pages/rooms.php'"></div>
-            </div>
-            <div id="settingsView" class="tab-pane fade container">
-                <div ng-include="'/settings/settings.php'"></div>
-            </div>
+<html lang="en" ng-app="blue">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<title>ECE Scheduling</title>
+	<!-- CSS -->
+	<!-- Bootstrap -->
+    <link href="./resources/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="./resources/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="./resources/nprogress/nprogress.css" rel="stylesheet">
+    <!-- jQuery custom content scroller -->
+    <link href="./resources/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet"/>
+    <!-- Custom Theme Style -->
+    <link href="./resources/css/custom.min.css" rel="stylesheet">
+    <link href="/resources/css/styles.css" rel="stylesheet">
+    
+    
+	<!-- JAVASCRIPT -->
+    <!-- jQuery -->
+    <script src="./resources/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="./resources/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="./resources/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="./resources/nprogress/nprogress.js"></script>
+    <!-- jQuery custom content scroller -->
+    <script src="./resources/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+	<!-- AngularJs v1.5.8 -->
+	<script src="resources/angular/angular.min.js"></script>
+	<script src="resources/angular/angular-route.min.js"></script>
+	<script src="resources/angular/angular-animate.min.js"></script>
+    <script src="resources/angular/angular-touch.min.js"></script>
+	<!-- Angular UI Router v0.3.1 -->
+	<script src="resources/angular/angular-ui-router.min.js"></script>
+	<script src="resources/angular/ui-bootstrap-2.3.1.min.js"></script>
+    <script src="./resources/javascript/custom.min.js"></script>
+</head>
+
+<body class="nav-md">
+	<div class="container body">
+      <div class="main_container">
+        <navbar></navbar>
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div ui-view />
         </div>
-    </body>
-    <script src="/resources/javascript/jquery.min.js"></script>
-    <script src="/resources/javascript/bootstrap.min.js"></script>
-    <script src="/resources/javascript/angular.min.js"></script>
-    <script src="/resources/javascript/app.js"></script>
+        <!-- /page content -->
+
+      </div>
+    </div>
+
+ 
+    <!-- App -->
+	<script src="app/app.js"></script>
+	<!-- Factories -->
+	<script src="app/Shared/globalFactory.js"></script>
+	<!-- Controllers -->
+	<script src="app/Home/HomeController.js"></script>
+	<script src='app/Rooms/RoomController.js'></script>
+	<script src="app/Instructors/InstructorController.js"></script>
+	<script src="app/Labs/LabController.js"></script>
+    <script src="app/Courses/CourseController.js"></script>
+	<!-- Directives -->
+	<script src="app/Shared/sharedDirectives.js"></script>
+	<script src="app/Rooms/RoomDirectives.js"></script>
+	<script src="app/Instructors/InstructorDirectives.js"></script>
+	<script src="app/Labs/LabDirectives.js"></script>
+    <script src="app/Courses/CourseDirectives.js"></script>
+</body>
+
 </html>
+
+
+
+
+
+
+
+    
+    
+
+
+    
