@@ -30,7 +30,10 @@ instructorModule.directive('instructorItem',[function(){
             pre: function(scope, element, attrs) {
                 scope.instructorName = scope.instructor.InstructorName
                 scope.courses = scope.instructor.Courses;
-                
+                scope.getInstructor = function(id) {
+                    globalFactory.setInstructorHistoryID(id).success(function(data){
+                        
+                });
                 }
             }
         }
@@ -54,7 +57,7 @@ instructorModule.directive('courseList',[function(){
   }
 }]);
 
-instructorModule.directive('courseItem',[function(){
+instructorModule.directive('courseItem',['globalFactory', function(globalFactory){
   return {
     replace:true,
     scope: {
@@ -73,6 +76,11 @@ instructorModule.directive('courseItem',[function(){
                 scope.courseID = scope.course.CourseID;
                 scope.sectionID = scope.course.SectionID;
                 scope.days = scope.course.Days;
+                scope.getCourse = function(id) {
+                    globalFactory.setCourseHistoryID(id).success(function(data){
+                        
+    });
+                };
             }
         }
     }

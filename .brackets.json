@@ -1,5 +1,12 @@
 {
     "jscodehints.detectedExclusions": [
-        "home/mlfraser/git/Scheduling/vendors/jquery/src/queue"
+        "home/mlfraser/git/Scheduling/vendors/jquery/src/queue",
+        "home/mlfraser/git/Scheduling/old/vendors/jquery/src/queue",
+        "/home/mlfraser/git/Scheduling/app/Import/ImportDirectives.js",
+        "/home/mlfraser/git/Scheduling/app/Rooms/RoomController.js",
+        "/home/mlfraser/git/Scheduling/old/vendors/DateJS/build/date-pa-IN.js",
+        "/home/mlfraser/git/Scheduling/app/Shared/sharedDirectives.js",
+        "/home/mlfraser/git/Scheduling/old/vendors/DateJS/build/date-sr-Cyrl-CS.js",
+        "/home/mlfraser/git/Scheduling/app/Rooms/RoomDirectives.js"
     ]
 }

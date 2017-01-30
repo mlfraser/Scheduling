@@ -1,11 +1,13 @@
-var shared = angular.module('shared',                       ['ui.router', 'ngAnimate',  'ngTouch', 'ui.bootstrap']);
-var homeModule = angular.module('homeModule',               ['shared']);
-var labModule = angular.module('labModule',                 ['shared', 'ui.calendar']);
-var instructorModule = angular.module('instructorModule',   ['shared']);
-var roomModule = angular.module('roomModule',               ['shared', 'ui.calendar']);
-var courseModule = angular.module('courseModule',           ['shared']);
+var shared = angular.module('shared',                           ['ui.router', 'ngAnimate',  'ngTouch', 'ui.bootstrap']);
+var homeModule = angular.module('homeModule',                   ['shared']);
+var labModule = angular.module('labModule',                     ['shared', 'ui.calendar']);
+var instructorModule = angular.module('instructorModule',       ['shared']);
+var roomModule = angular.module('roomModule',                   ['shared', 'ui.calendar']);
+var courseModule = angular.module('courseModule',               ['shared']);
+var courseHistoryModule = angular.module('courseHistoryModule', ['shared']);
+var importModule = angular.module('importModule',               ['shared', 'angularFileUpload']);
 
-var app = angular.module('app', ['shared', 'labModule', 'instructorModule', 'roomModule', 'courseModule', 'homeModule']);
+var app = angular.module('app', ['shared', 'labModule', 'instructorModule', 'roomModule', 'courseModule', 'homeModule', 'courseHistoryModule', 'importModule']);
 
 app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider) {
     $locationProvider.html5Mode({
@@ -40,5 +42,20 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', functio
         templateUrl: "app/Courses/course.html",
         controller: "CourseController",
         controllerAs: "courseCtrl"
-    });
+    }).state('course-history', {
+        url: "/courseHistory",
+        templateUrl: "app/CourseHistory/courseHistory.html",
+        controller: "CourseHistoryController",
+        controllerAs: "courseHistoryCtrl"
+    }).state('instructor-history', {
+        url: "/instructorHistory",
+        templateUrl: "app/InstructorHistory/instructorHistory.html",
+        controller: "InstructorHistoryController",
+        controllerAs: "instructorHistoryCtrl"
+    }).state('import', {
+        url: "/import",
+        templateUrl: "app/Import/import.html",
+        controller: "ImportController",
+        controllerAs: "importCtrl"
+    });;
 }]);

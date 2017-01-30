@@ -1,6 +1,11 @@
 <div class="row">
 
-    <h1>{{instructorName}}</h1>
+    <h1>
+        <a ui-sref="course-history" ng-click="getInstructor(instructorID)">
+        {{instructorName}}
+        </a>        
+    </h1>
+    
     <hr>
 
     <course-list courses="courses"></course-list>
