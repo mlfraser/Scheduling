@@ -1,13 +1,14 @@
-var shared = angular.module('shared',                           ['ui.router', 'ngAnimate',  'ngTouch', 'ui.bootstrap']);
-var homeModule = angular.module('homeModule',                   ['shared']);
-var labModule = angular.module('labModule',                     ['shared', 'ui.calendar']);
-var instructorModule = angular.module('instructorModule',       ['shared']);
-var roomModule = angular.module('roomModule',                   ['shared', 'ui.calendar']);
-var courseModule = angular.module('courseModule',               ['shared']);
-var courseHistoryModule = angular.module('courseHistoryModule', ['shared']);
-var importModule = angular.module('importModule',               ['shared', 'angularFileUpload']);
+var shared = angular.module('shared',                                   ['ui.router', 'ngAnimate',  'ngTouch', 'ui.bootstrap']);
+var homeModule = angular.module('homeModule',                           ['shared']);
+var labModule = angular.module('labModule',                             ['shared', 'ui.calendar']);
+var instructorModule = angular.module('instructorModule',               ['shared']);
+var roomModule = angular.module('roomModule',                           ['shared', 'ui.calendar']);
+var courseModule = angular.module('courseModule',                       ['shared']);
+var courseHistoryModule = angular.module('courseHistoryModule',         ['shared']);
+var instructorHistoryModule = angular.module('instructorHistoryModule', ['shared']);
+var importModule = angular.module('importModule',                       ['shared', 'angularFileUpload']);
 
-var app = angular.module('app', ['shared', 'labModule', 'instructorModule', 'roomModule', 'courseModule', 'homeModule', 'courseHistoryModule', 'importModule']);
+var app = angular.module('app', ['shared', 'labModule', 'instructorModule', 'roomModule', 'courseModule', 'homeModule', 'courseHistoryModule', 'instructorHistoryModule', 'importModule']);
 
 app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider) {
     $locationProvider.html5Mode({

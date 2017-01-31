@@ -17,7 +17,7 @@ instructorModule.directive('instructorList',[function(){
   }
 }]);
 
-instructorModule.directive('instructorItem',[function(){
+instructorModule.directive('instructorItem',['globalFactory', function(globalFactory){
   return {
     transclude: true,
     replace: true,
@@ -30,10 +30,10 @@ instructorModule.directive('instructorItem',[function(){
             pre: function(scope, element, attrs) {
                 scope.instructorName = scope.instructor.InstructorName
                 scope.courses = scope.instructor.Courses;
-                scope.getInstructor = function(id) {
-                    globalFactory.setInstructorHistoryID(id).success(function(data){
-                        
-                });
+                scope.instructorID = scope.instructor.InstructorID;
+                scope.getInstructor = function(id, name) {
+                    globalFactory.setInstructorHistoryID(id,name);
+                };
                 }
             }
         }

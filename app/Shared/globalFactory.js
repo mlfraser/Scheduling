@@ -2,6 +2,7 @@ shared.factory('globalFactory', ['$http', function($http) {
     var service = {};
     var courseHistoryID = 0;
     var instructorHistoryID = 0;
+    var instructorHistoryName = "";
     
     service.getSemester = function() {
         return $http({
@@ -67,25 +68,39 @@ shared.factory('globalFactory', ['$http', function($http) {
             },
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         });
-    }
-    
+    };
+
+     service.getInstructorHistory = function(instructorID) {
+        return $http({
+           url: 'app/InstructorHistory/GetInstructorHistory.php',
+            method: 'GET',
+            params: {
+                instructorID: instructorID
+            },
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+    };
     
     
     //Get/Set for course history ID data passing
     service.getCourseHistoryID = function() {
         return courseHistoryID;
-    }
+    };
     service.setCourseHistoryID = function(id) {
         courseHistoryID = id;
-    }
+    };
     
     //Get/Set for instructor ID data passing
     service.getInstructorHistoryID = function() {
         return instructorHistoryID;
-    }
-    service.setInstructorHistoryID = function(id) {
+    };
+    service.setInstructorHistoryID = function(id, instructorName) {
         instructorHistoryID = id;
-    }
+        instructorHistoryName = instructorName;
+    };
+    service.getInstructorHistoryName = function() {
+        return instructorHistoryName;
+    };
     
     return service;
 }]);

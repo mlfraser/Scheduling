@@ -1,4 +1,4 @@
-<h1>Archer</h1>
+<h1>{{instructorHistoryCtrl.instructorName}}</h1>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -13,11 +13,24 @@
             <th>Start Time</th>
             <th>End Time</th>
             <th>Location</th>
+            <th>Days</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <th></th>
+        <tr ng-repeat="item in instructorHistoryCtrl.instructor">
+            <th>{{item.CRN}}</th>
+            <th>EE{{item.courseID}} - {{item.courseTitle}}</th>
+            <th>{{item.credits}}</th>
+            <th>{{item.semester}}</th>
+            <th>{{item.year}}</th>
+            <th>{{item.classType}}</th>
+            <th ng-if="item.isLab == 1">Yes</th>
+            <th ng-if="item.isLab == 0">No</th>
+            <th>{{item.dates}}</th>
+            <th>{{item.startTime}}</th>
+            <th>{{item.endTime}}</th>
+            <th>{{item.room}}</th>
+            <th>{{item.days}}</th>
         </tr>
     </tbody>
 </table>
