@@ -16,6 +16,7 @@
         //Parameters, with data propery sifted through
         $semester = $_REQUEST['semester'];
         $year = $_REQUEST['year'];
+        $isLab = $_REQUEST['isLab'];
         
         //validate data coming in
         if($year == null || $year == "") {
@@ -23,6 +24,9 @@
         }
         if($semester == null || $semester == "") {
             throw new Exception('The semester passed in is not defined', 1);
+        }
+        if($isLab == null || $isLab == "") {
+            throw new Exception('The isLab parameter passed in is not defined', 1);
         }
         
         
@@ -33,17 +37,17 @@
     	$dbh = new PDO(DSN, DBUSER, DBPASS, $options) or die('Cannot connect to database');
         
         $dow = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday');
-        $abbrev = array('M', 'T', 'W', 'H', 'F');
+        $abbrev = array('M', 'T', 'W', 'R', 'F');
         
         $days = array();
         for($i = 0; $i < 5; $i++) {
-            $query = $dbh->prepare("SELECT DISTINCT st.timeStartEnd as startTime, et.timeStartEnd as endTime, s.startTimeID, s.endTimeID FROM Section s
+            $query = $dbh->prepare("SELECT DISTINCT st.timeStartEnd as startTime, s.startTimeID FROM Section s
                                     JOIN Day d
                                     JOIN SectionDayMapping x on x.dayID = d.dayID AND s.sectionID = x.sectionID
                                     JOIN Time st on s.startTimeID = st.timeID
                                     JOIN Time et on et.timeID = s.endTimeID
                                     JOIN Semester sm on s.semesterID = sm.semesterID
-                                    WHERE d.dayLetter LIKE '".$abbrev[$i]."' AND s.year = ".$year." AND sm.semesterType LIKE '".$semester."%' AND s.isLab = 0
+                                    WHERE d.dayLetter LIKE '".$abbrev[$i]."' AND s.year = ".$year." AND sm.semesterType LIKE '".$semester."%' AND s.isLab = ".$isLab."
                                     ORDER BY st.fullTime, startTime");
             $query->execute();
             $results = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -57,12 +61,12 @@
                                         JOIN Semester sm on s.semesterID = sm.semesterID
                                         JOIN Room r on r.roomID = s.roomID
                                         JOIN Building b on b.buildingID = r.buildingID
-                                        WHERE d.dayLetter LIKE '".$abbrev[$i]."' AND s.year = ".$year." AND sm.semesterType LIKE '".$semester."%' AND s.startTimeID = ".$r["startTimeID"]." AND s.endTimeID = ".$r["endTimeID"]." AND s.isLab = 0");
+                                        WHERE d.dayLetter LIKE '".$abbrev[$i]."' AND s.year = ".$year." AND sm.semesterType LIKE '".$semester."%' AND s.startTimeID = ".$r["startTimeID"]."  AND s.isLab = ".$isLab);
                 $query->execute();
                 $cResults = $query->fetchAll(PDO::FETCH_ASSOC);
                 $courses = array();
                 foreach ($cResults as $c) {
-                    $query = $dbh->prepare("SELECT i.name FROM Section s
+                    $query = $dbh->prepare("SELECT i.name, i.instructorID FROM Section s
                                             JOIN Instructor i
                                             JOIN SectionInstructorMapping x on x.instructorID = i.instructorID AND s.sectionID = x.sectionID
                                             WHERE s.sectionID = ".$c["sectionID"]);
@@ -70,7 +74,11 @@
                     $iResults = $query->fetchAll(PDO::FETCH_ASSOC);
                     $instructors = array();
                     foreach ($iResults as $in) {
-                        array_push($instructors, $in["name"]);
+                        $instructor = array(
+                            'Name' => $in["name"],
+                            'InstructorID' => $in["instructorID"]
+                        );
+                        array_push($instructors, $instructor);
                     }
                     $course = array(
                         'Instructors' => $instructors,

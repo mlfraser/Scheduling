@@ -47,7 +47,7 @@ courseModule.directive('timeItem',[function(){
     compile: function() {
         return {
             pre: function(scope, element, attrs) {
-                scope.timeDur = scope.time.StartTime + " - " + scope.time.EndTime;
+                scope.timeDur = scope.time.StartTime;
                 scope.courses = scope.time.Courses;
             }
         }
@@ -55,7 +55,7 @@ courseModule.directive('timeItem',[function(){
   }
 }]);
 
-courseModule.directive('cItem',[function(){
+courseModule.directive('cItem',['globalFactory', function(globalFactory){
   return {
     replace: true,
     scope: {
@@ -69,6 +69,13 @@ courseModule.directive('cItem',[function(){
                 scope.RoomNumber = scope.course.RoomNumber;
                 scope.BuildingName = scope.course.BuldingName;
                 scope.Instructors = scope.course.Instructors;
+                scope.getCourse = function(id) {
+                    globalFactory.setCourseHistoryID(id);
+                
+            }
+                scope.getInstructor = function(id, name) {
+                    globalFactory.setInstructorHistoryID(id,name);
+                };
             }
         }
     }
@@ -118,7 +125,9 @@ courseModule.directive('courseSemesterItem',['globalFactory', function(globalFac
                 
                 scope.changeSemester = function(i) {
                     scope.selectedSemester = i;
-                    globalFactory.getCourses(scope.semesterTime, scope.year).success(function(data){
+                    scope.$parent.$parent.$parent.courseCtrl.year = scope.year;
+                    scope.$parent.$parent.$parent.courseCtrl.semester = scope.semesterTime
+                    globalFactory.getCourses(scope.semesterTime, scope.year, scope.$parent.$parent.$parent.courseCtrl.isLab).success(function(data){
                         scope.$parent.$parent.$parent.courseCtrl.days = data.success.result;
                     });
                 };

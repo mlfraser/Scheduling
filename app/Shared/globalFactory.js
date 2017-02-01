@@ -47,13 +47,14 @@ shared.factory('globalFactory', ['$http', function($http) {
         });
     };
 
-    service.getCourses = function(semester, year) {
+    service.getCourses = function(semester, year, isLab) {
         return $http({
            url: 'app/Courses/GetCourses.php',
             method: 'GET',
             params: {
                 semester: semester,
-                year: year
+                year: year,
+                isLab: isLab
             },
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         });

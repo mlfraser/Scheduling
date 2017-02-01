@@ -1,5 +1,9 @@
 <div class="course-box" ng-style="">
-    <h4>EE{{CourseID}}</h4>
+    <a ui-sref="course-history" ng-click="getCourse(CourseID)">
+        <h4>EE{{CourseID}}</h4>
+    </a>
     <h5>{{BuildingName}} {{RoomNumber}}</h5>
-    <h5 ng-repeat="item in Instructors">{{item}}</h5>
+    <a  ng-repeat="item in Instructors" ui-sref="instructor-history" ng-click="getInstructor(item.InstructorID, item.Name)">
+        <h5>{{item.Name}}</h5>
+    </a>
 </div>
