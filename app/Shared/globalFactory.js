@@ -82,6 +82,16 @@ shared.factory('globalFactory', ['$http', function($http) {
         });
     };
     
+    service.getColors = function() {
+        return $http({
+           url: 'app/Shared/GetColors.php',
+            method: 'GET',
+            params: {
+            },
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+    }
+    
     
     //Get/Set for course history ID data passing
     service.getCourseHistoryID = function() {

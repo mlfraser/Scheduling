@@ -69,6 +69,17 @@ courseModule.directive('cItem',['globalFactory', function(globalFactory){
                 scope.RoomNumber = scope.course.RoomNumber;
                 scope.BuildingName = scope.course.BuldingName;
                 scope.Instructors = scope.course.Instructors;
+                
+                
+                startTime = scope.course.StartTime;
+                endTime = scope.course.EndTime;
+                scope.time = ((parseInt(endTime.substring(0,2)) * 60 + parseInt(endTime.substring(3,5))) - (parseInt(startTime.substring(0,2)) * 60 + parseInt(startTime.substring(3,5)))) * 2;
+                
+                
+                scope.Color = {
+                    'background-color' : '#' + scope.course.Hex,
+                    'height' : scope.time
+                };
                 scope.getCourse = function(id) {
                     globalFactory.setCourseHistoryID(id);
                 

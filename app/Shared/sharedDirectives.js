@@ -8,3 +8,19 @@ shared.directive('navbar', [function() {
     }
   }
 }]);
+
+
+shared.directive('colorLegend', ['globalFactory', function(globalFactory) {
+  return {
+    replace: true,
+    scope: {},
+    templateUrl: 'app/Shared/colorLegend.html',
+    link: function(scope, element, attrs) {
+      globalFactory.getColors().success(function(data){
+            scope.colors = data.success.result;
+        });
+        
+    }
+  }
+}]);
+

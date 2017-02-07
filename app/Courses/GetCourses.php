@@ -53,7 +53,7 @@
             $results = $query->fetchAll(PDO::FETCH_ASSOC);
             $times = array();
             foreach ($results as $r) {
-                $query = $dbh->prepare("SELECT s.courseID, s.sectionName, r.roomNumber, b.buildingName, s.sectionID, b.buildingID FROM Section s
+                $query = $dbh->prepare("SELECT s.courseID, s.sectionName, r.roomNumber, b.buildingName, s.sectionID, b.buildingID, c.hex, st.fullTime as startTime, et.fullTime as endTime FROM Section s
                                         JOIN Day d
                                         JOIN SectionDayMapping x on x.dayID = d.dayID AND s.sectionID = x.sectionID
                                         JOIN Time st on s.startTimeID = st.timeID
@@ -61,6 +61,7 @@
                                         JOIN Semester sm on s.semesterID = sm.semesterID
                                         JOIN Room r on r.roomID = s.roomID
                                         JOIN Building b on b.buildingID = r.buildingID
+                                        JOIN ColorCoding c on SUBSTR(s.courseID,1,1) LIKE SUBSTR(c.key, 1,1)
                                         WHERE d.dayLetter LIKE '".$abbrev[$i]."' AND s.year = ".$year." AND sm.semesterType LIKE '".$semester."%' AND s.startTimeID = ".$r["startTimeID"]."  AND s.isLab = ".$isLab);
                 $query->execute();
                 $cResults = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -87,7 +88,10 @@
                         'RoomNumber' =>  $c["roomNumber"],
                         'BuildingName' =>  $c["buildingName"],
                         'BuildingID' => $c["buildingID"],
-                        'SectionID' =>  $c["sectionID"]
+                        'SectionID' =>  $c["sectionID"],
+                        'StartTime' => $c["startTime"],
+                        'EndTime' => $c["endTime"],
+                        'Hex' => $c["hex"]
                     );
                     array_push($courses, $course);
                 }
