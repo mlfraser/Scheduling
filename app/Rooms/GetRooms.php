@@ -46,7 +46,7 @@
         //loop through instructors to construct object
         foreach($results as $r){
             //find all courses
-            $query = $dbh->prepare("SELECT s.sectionName, s.sectionID, s.dates, c.courseID, ts.timeStartEnd AS startTime, te.timeStartEnd AS endTime, s.year FROM Section s 
+            $query = $dbh->prepare("SELECT s.sectionName, s.sectionID, c.courseID, ts.timeStartEnd AS startTime, te.timeStartEnd AS endTime, s.year FROM Section s 
                                     JOIN Room r on r.roomID = s.roomID
                                     JOIN Course c on c.courseID = s.courseID
                                     JOIN Building b on b.buildingID = r.buildingID
@@ -98,10 +98,6 @@
                     'title' => 'EE'.$c["courseID"].' '.$c["sectionName"],
                     'start' => $startTime,
                     'end' => $endTime,
-                    'ranges' => array(
-                        'start' => $c["year"]."/".substr($c["dates"],0,5),
-                        'end' => $c["year"]."/".substr($c["dates"],6,5)
-                    ),
                     'dow' => $days
                    
                 );

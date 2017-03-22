@@ -10,6 +10,9 @@
         "/home/mlfraser/git/Scheduling/app/Rooms/RoomDirectives.js",
         "/home/mlfraser/git/Scheduling/app/Home/HomeController.js",
         "/home/mlfraser/git/Scheduling/old/vendors/DateJS/build/date-fr-LU.js",
-        "/home/mlfraser/git/Scheduling/old/vendors/DateJS/build/date-bg-BG.js"
+        "/home/mlfraser/git/Scheduling/old/vendors/DateJS/build/date-bg-BG.js",
+        "/home/mlfraser/git/Scheduling/app/Home/HomeDirectives.js",
+        "/home/mlfraser/git/Scheduling/old/vendors/DateJS/build/date-ms-MY.js",
+        "/home/mlfraser/git/Scheduling/resources/moment/locale/eu.js"
     ]
 }

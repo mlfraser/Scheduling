@@ -1,0 +1,9 @@
+<fieldset>
+    <legend>Color Legend</legend>
+    <div ng-repeat="item in colors">
+        <div  class="col-sm-1">
+            <label for="{{item.key}}">{{item.key}}</label>
+            <div id="{{item.key}}" class="color-legend" style="background-color:#{{item.hex}}"></div>
+        </div>
+    </div>
+</fieldset>

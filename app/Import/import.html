@@ -1,4 +1,11 @@
-<label for="file">CSV File</label>
-<div id="file" class="well my-drop-zone" nv-file-over="" uploader="uploader">
-    Drop Zone
-</div>
+Drop File:
+    <div ngf-drop ngf-select ng-model="files" class="drop-box" 
+        ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true"
+        accept="image/*,application/pdf" 
+        ngf-pattern="'image/*,application/pdf'">Drop pdfs or images here or click to upload</div>
+Files:
+    <ul>
+        <li ng-repeat="f in files" style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}</li>
+    </ul>
+    Upload Log:
+    <pre>{{log}}</pre>

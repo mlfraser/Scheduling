@@ -90,7 +90,27 @@ shared.factory('globalFactory', ['$http', function($http) {
             },
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         });
-    }
+    };
+    
+    service.getDataForSections = function() {
+        return $http({
+           url: 'app/AddEditSection/GetCourseOptions.php',
+            method: 'GET',
+            params: {
+            },
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+    };
+    
+    
+    service.addSection = function(params) {
+        return $http({
+           url: 'app/Import/AddNewSection.php',
+            method: 'GET',
+            params: params,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+    };
     
     
     //Get/Set for course history ID data passing

@@ -6,9 +6,11 @@ var roomModule = angular.module('roomModule',                           ['shared
 var courseModule = angular.module('courseModule',                       ['shared']);
 var courseHistoryModule = angular.module('courseHistoryModule',         ['shared']);
 var instructorHistoryModule = angular.module('instructorHistoryModule', ['shared']);
-var importModule = angular.module('importModule',                       ['shared', 'angularFileUpload']);
 
-var app = angular.module('app', ['shared', 'labModule', 'instructorModule', 'roomModule', 'courseModule', 'homeModule', 'courseHistoryModule', 'instructorHistoryModule', 'importModule']);
+var updateSectionModule = angular.module('updateSectionModule',         ['shared']);
+var importModule = angular.module('importModule',                       ['shared', 'ngFileUpload']);
+
+var app = angular.module('app', ['shared', 'labModule', 'instructorModule', 'roomModule', 'courseModule', 'homeModule', 'courseHistoryModule', 'instructorHistoryModule', 'importModule', 'updateSectionModule']);
 
 app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider) {
     $locationProvider.html5Mode({
@@ -58,5 +60,10 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', functio
         templateUrl: "app/Import/import.html",
         controller: "ImportController",
         controllerAs: "importCtrl"
-    });;
+    }).state('update-section', {
+        url: "/updateSection",
+        templateUrl: "app/AddEditSection/section.html",
+        controller: "UpdateSectionController",
+        controllerAs: "updateSectionCtrl"
+    });
 }]);

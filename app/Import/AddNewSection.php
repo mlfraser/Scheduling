@@ -12,20 +12,28 @@
         include '/itss/local/home/ecescheduling/public_html/resources/functions/validate.php';
         
         //Parameters, with data propery sifted through
-        $year = $_REQUEST['year'];
-        $courseID = $_REQUEST['courseID'];
-        $courseName = $_REQUEST['courseName'];
-        $building = $_REQUEST['building'];
-        $room = $_REQUEST['room'];
-        $capacity = $_REQUEST['capacity'];
-        $semester = $_REQUEST['semester'];
-        $startTime = $_REQUEST['startTime'];
-        $endTime = $_REQUEST['endTime'];
-        $crn = $_REQUEST['crn'];
-        $sectionName = $_REQUEST['sectionName'];
-        $typeID = $_REQUEST['typeID'];
-        $credits = $_REQUEST['credits'];
-        $days = $_REQUEST['days'];
+        $year = testInput(($_REQUEST['year']);
+        $courseID = testInput($_REQUEST['courseID']);
+        $courseName = testInput($_REQUEST['courseName']);
+        $building = testInput($_REQUEST['building']);
+        $buildingID = testInput($REQUEST['buildingID']);
+        $room = testInput($_REQUEST['room']);
+        $roomID = testInput($_REQUEST['roomID']);
+        $capacity = testInput($_REQUEST['capacity']);
+        $semester = testInput($_REQUEST['semester']);
+        $semesterID = testInput($_REQUEST['semesterID']);
+        $startTime = testInput($_REQUEST['startTime']);
+        $endTime = testInput($_REQUEST['endTime']);
+        $startTimeID = testInput($_REQUEST['startTimeID']);
+        $endTimeID = testInput($_REQUEST['endTimeID']);
+        $crn = testInput($_REQUEST['crn']);
+        $sectionName = testInput($_REQUEST['sectionName']);
+        $sectionTitle = testInput($_REQUEST['sectionTitle']);
+        $sectionID = testInput($_REQUEST['sectionID']);
+        $typeID = testInput($_REQUEST['typeID']);
+        $isLab = testInput($_REQUEST['isLab']);
+        $credits = testInput($_REQUEST['credits']);
+        $days = testInput($_REQUEST['days']);
         $profName = json_decode(stripslashes($_REQUEST['profName']));
         
         //validate data coming in
@@ -52,64 +60,77 @@
     	}
         
         /******************************************************************************************/
-        
-        //GET/UPDATE ROOM AND BUILDING DATA
-        $exists = $dbh->query("SELECT * FROM Room r
-    	                       JOIN Building b on b.buildingID = r.buildingID
-    	                       WHERE r.roomNumber = $room && b.buildingID = $building");
-    	if(($exists->rowCount()) <= 0) {
-    	    //Check if building exists
-    	    $buildingExists = $dbh->query("SELECT * FROM Building WHERE buildingID = $building");
-        	if(($buildingExists->rowCount()) <= 0) {
-        	    $dbh->query("INSERT INTO Building(buildingID) VALUES ('$building')");
-        	    $buildingExists = $dbh->query("SELECT * FROM Building WHERE buildingID = $building");
-        	}
-        	
-    	    $dbh->query("INSERT INTO Room(roomNumber, buildingID, capacity) VALUES ('$room', '$building', '$capacity')");
-    	    $exists = $dbh->query("SELECT * FROM Room r
-    	                       JOIN Building b on b.buildingID = r.buildingID
-    	                       WHERE r.roomNumber = $room && b.buildingID = $building");
-    	}
-    	
-    	$exists = $exists->fetch();
-    	$roomID = $exists["roomID"];
-        
-        /****************************************************************************************/
-        
-        //GET SEMESTER DATA
-        $exists = $dbh->query("SELECT * FROM Semester WHERE semesterType LIKE '$semester'")->fetch();
+        if(!isset($roomID)) {
+            //GET/UPDATE ROOM AND BUILDING DATA
+            $exists = $dbh->query("SELECT * FROM Room r
+                                   JOIN Building b on b.buildingID = r.buildingID
+                                   WHERE r.roomNumber = $room && b.buildingID = $building");
+            if(($exists->rowCount()) <= 0) {
+                //Check if building exists
+                $buildingExists = $dbh->query("SELECT * FROM Building WHERE buildingID = $building");
+                if(($buildingExists->rowCount()) <= 0) {
+                    $dbh->query("INSERT INTO Building(buildingID) VALUES ('$building')");
+                    $buildingExists = $dbh->query("SELECT * FROM Building WHERE buildingID = $building");
+                }
 
-    	$semesterID = $exists["semesterID"];
+                $dbh->query("INSERT INTO Room(roomNumber, buildingID, capacity) VALUES ('$room', '$building', '$capacity')");
+                $exists = $dbh->query("SELECT * FROM Room r
+                                   JOIN Building b on b.buildingID = r.buildingID
+                                   WHERE r.roomNumber = $room && b.buildingID = $building");
+            }
+            $exists = $exists->fetch();
+    	   $roomID = $exists["roomID"];
+        }
+    	
+    	
+        
+        /****************************************************************************************/
+        if(!isset($semesterID)){
+            //GET SEMESTER DATA
+            $exists = $dbh->query("SELECT * FROM Semester WHERE semesterType LIKE '$semester'")->fetch();
+
+            $semesterID = $exists["semesterID"];
+        }
+        /****************************************************************************************/
+        if(!isset($startTimeID)){
+            //GET START TIME DATA
+            $exists = $dbh->query("SELECT * FROM Time WHERE timeStartEnd LIKE '$startTime'");
+            if(($exists->rowCount()) <= 0) {
+                $dbh->query("INSERT INTO Time(timeStartEnd) VALUES ('$startTime')");
+                $exists = $dbh->query("SELECT * FROM Time WHERE timeStartEnd LIKE '$startTime'");
+            }
+            $exists = $exists->fetch();
+            $startTimeID = $exists["timeID"];
+        }
         
         /****************************************************************************************/
         
-        //GET START TIME DATA
-        $exists = $dbh->query("SELECT * FROM Time WHERE timeStartEnd LIKE '$startTime'");
-    	if(($exists->rowCount()) <= 0) {
-    	    $dbh->query("INSERT INTO Time(timeStartEnd) VALUES ('$startTime')");
-    	    $exists = $dbh->query("SELECT * FROM Time WHERE timeStartEnd LIKE '$startTime'");
-    	}
-    	$exists = $exists->fetch();
-    	$startTimeID = $exists["timeID"];
+        if(!isset($endTimeID)){
+            //GET END TIME DATA
+            $exists = $dbh->query("SELECT * FROM Time WHERE timeStartEnd LIKE '$endTime'");
+            if(($exists->rowCount()) <= 0) {
+                $dbh->query("INSERT INTO Time(timeStartEnd) VALUES ('$endTime')");
+                $exists = $dbh->query("SELECT * FROM Time WHERE timeStartEnd LIKE '$endTime'");
+            }
+            $exists = $exists->fetch();
+            $endTimeID = $exists["timeID"];
+        }
+        
+        /****************************************************************************************/
+        if(!isset($sectionID)){
+            //ADD SECTION
+            $dbh->query("INSERT INTO Section(courseID, CRN, sectionName, startTimeID, endTimeID, roomID, year, semesterID, typeID, credits, isLab, sectionTitle) VALUES ('$courseID', '$crn', '$sectionName', '$startTimeID', '$endTimeID', '$roomID', '$year', '$semesterID', '$typeID', '$credits', '$isLab', '$sectionTitle')");
+            $sectionID = $dbh->lastInsertID();
+        }
+        else{
+            $dbh->query("UPDATE Section SET courseID = '$courseID', CRN = '$crn', sectionName = '$sectionName', startTimeID = '$startTimeID', endTimeID = '$endTimeID', roomID = '$roomID', year = '$year', semesterID = '$semesterID', type = '$typeID', credits = '$credits', isLab = '$isLab', sectionTitle = '$sectionTitle' WHERE sectionID = '$sectionID'");
+        }
         
         /****************************************************************************************/
         
-        //GET END TIME DATA
-        $exists = $dbh->query("SELECT * FROM Time WHERE timeStartEnd LIKE '$endTime'");
-    	if(($exists->rowCount()) <= 0) {
-    	    $dbh->query("INSERT INTO Time(timeStartEnd) VALUES ('$endTime')");
-    	    $exists = $dbh->query("SELECT * FROM Time WHERE timeStartEnd LIKE '$endTime'");
-    	}
-    	$exists = $exists->fetch();
-    	$endTimeID = $exists["timeID"];
-        
-        /****************************************************************************************/
-        
-        //ADD SECTION
-        $dbh->query("INSERT INTO Section(courseID, CRN, sectionName, startTimeID, endTimeID, roomID, year, semesterID, typeID, credits) VALUES ('$courseID', '$crn', '$sectionName', '$startTimeID', '$endTimeID', '$roomID', '$year', '$semesterID', '$typeID', '$credits')");
-    	$sectionID = $dbh->lastInsertID();
-        
-        /****************************************************************************************/
+        if(!isset($sectionID)){
+            $dbh->query("DELETE FROM SectionDayMapping WHERE sectionID = ".$sectionID);
+        }
         
         //ADD DAYS TO SECTION
         foreach(str_split($days) as $day)
@@ -127,28 +148,39 @@
     	}
         
         /***************************************************************************************/
-        
-        //ADD INSTRUCTORS TO SECTION
-        foreach($profName as $name)
-    	{
-        	//Get instructorID
-        	$exists = $dbh->query("SELECT * FROM Instructor WHERE name LIKE '$name'");
-        	if(($exists->rowCount()) <= 0)
-        	{
-        	    $dbh->query("INSERT INTO Instructor(name) VALUES ('$name')");
-        	    $exists = $dbh->query("SELECT * FROM Instructor WHERE name LIKE '$name'");
-        	}
-        	$exists = $exists->fetch();
-        	$instructorID = $exists['instructorID'];
-        	$dbh->query("INSERT INTO SectionInstructorMapping(sectionID, instructorID) VALUES ('$sectionID', '$instructorID')");
-    	}
-        
+        if(isset($sectionID)) {
+            $dbh->query("DELETE FROM SectionInstructorMapping WHERE sectionID = ".$sectionID);
+        }
+        if(is_int($profName)) {
+            $dbh->query("INSERT INTO SectionInstructorMapping(sectionID, instructorID) VALUES ('$sectionID', '$profName')");
+        }
+        else{
+            //ADD INSTRUCTORS TO SECTION
+            foreach($profName as $name)
+            {
+                if(is_int($name)) {
+                    $dbh->query("INSERT INTO SectionInstructorMapping(sectionID, instructorID) VALUES ('$sectionID', '$name')");
+                }
+                else{
+                    //Get instructorID
+                    $exists = $dbh->query("SELECT * FROM Instructor WHERE name LIKE '$name'");
+                    if(($exists->rowCount()) <= 0)
+                    {
+                        $dbh->query("INSERT INTO Instructor(name) VALUES ('$name')");
+                        $exists = $dbh->query("SELECT * FROM Instructor WHERE name LIKE '$name'");
+                    }
+                    $exists = $exists->fetch();
+                    $instructorID = $exists['instructorID'];
+                    $dbh->query("INSERT INTO SectionInstructorMapping(sectionID, instructorID) VALUES ('$sectionID', '$instructorID')");
+                }
+            }  
+        }
         
         //convert to json string
         echo json_encode(array(
             'success' => array(
-                'result' => $days,
-                'message' => "Instructors were successfully retrieved.",
+                'result' => $sectionID,
+                'message' => "Section was successfully updated.",
             ),
         ));
     }

@@ -1,0 +1,188 @@
+<form class="form-horizontal form-label-left">
+    <h1>Add New Section</h1>
+    
+    
+    
+    <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Section Identifier</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+          <input type="text" class="form-control" placeholder="Ex: 0A, L01" ng-model="updateSectionCtrl.sectionName">
+        </div>
+      </div>
+    <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Section Title</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+          <input type="text" class="form-control" placeholder="For courses that have different section names" ng-model="updateSectionCtrl.sectionTitle">
+        </div>
+      </div>
+    
+    <!-- Select course -->
+    <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Course</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            <div class="input-group">
+              <select class="form-control" ng-model="updateSectionCtrl.selectedCourse" convert-to-number>
+                
+                <option ng-repeat="course in updateSectionCtrl.courses" value="{{course.courseID}}">EE{{course.courseID}} - {{course.title}}</option>
+              </select>
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-success" ng-click="updateSectionCtrl.open()">New...</button>
+              </span>
+            </div>
+        </div>
+      </div>
+    
+    <new-course-modal></new-course-modal>
+    
+    
+    
+    <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Start Time</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            <div class="input-group">
+          <select class="form-control" ng-model="updateSectionCtrl.selectedStartTime" convert-to-number>
+            
+            <option ng-repeat="course in updateSectionCtrl.times" value="{{course.timeID}}">{{course.timeStartEnd}}</option>
+          </select>
+             <span class="input-group-btn">
+                  <button type="button" class="btn btn-success">New...</button>
+              </span>
+        </div>
+        </div>
+      </div>
+    
+    <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">End Time</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            <div class="input-group">
+          <select class="form-control" ng-model="updateSectionCtrl.selectedEndTime" convert-to-number>
+            
+            <option ng-repeat="course in updateSectionCtrl.times" value="{{course.timeID}}">{{course.timeStartEnd}}</option>
+          </select>
+             <span class="input-group-btn">
+                  <button type="button" class="btn btn-success">New...</button>
+              </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Room</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            <div class="input-group">
+          <select class="form-control" ng-model="updateSectionCtrl.selectedRoom" convert-to-number>
+            
+            <option ng-repeat="course in updateSectionCtrl.rooms" value="{{course.roomID}}">{{course.buildingName}} {{course.roomNumber}}</option>
+          </select>
+             <span class="input-group-btn">
+                  <button type="button" class="btn btn-success">New...</button>
+              </span>
+        </div>
+        </div>
+      </div>
+    
+    <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Semester</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            <div class="input-group">
+          <select class="form-control" ng-model="updateSectionCtrl.selectedSemester" convert-to-number>
+            
+            <option ng-repeat="course in updateSectionCtrl.semesters" value="{{course.semesterID}}">{{course.semesterType}}</option>
+          </select>
+             <span class="input-group-btn">
+                  <button type="button" class="btn btn-success">New...</button>
+              </span>
+            </div>
+        </div>
+      </div>
+    
+    <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Instructor</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            <div class="input-group">
+          <select class="form-control" ng-model="updateSectionCtrl.selectedInstructor" convert-to-number multiple>
+            
+            <option ng-repeat="course in updateSectionCtrl.instructors" value="{{course.instructorID}}">{{course.name}}</option>
+          </select>
+             <span class="input-group-btn">
+                  <button type="button" class="btn btn-success">New...</button>
+              </span>
+            </div>
+        </div>
+      </div>
+    
+    
+    
+    <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Year</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+          <input type="text" class="form-control" placeholder="Ex: 2017" ng-model="updateSectionCtrl.year">
+        </div>
+      </div>
+    
+    <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Credits</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+          <input type="text" class="form-control" placeholder="Ex: 3" ng-model="updateSectionCtrl.credits">
+        </div>
+      </div>
+    
+    <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">CRN</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+          <input type="text" class="form-control"  ng-model="updateSectionCtrl.crn">
+        </div>
+      </div>
+    
+    <div class="form-group">
+        <label class="col-md-3 col-sm-3 col-xs-12 control-label">Lab?
+        </label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+         <div class="checkbox">
+            <label>
+              <input type="checkbox" value="" ng-model="updateSectionCtrl.isLab">
+            </label>
+          </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 col-sm-3 col-xs-12 control-label">Online?
+        </label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+        <div class="checkbox">
+            <label>
+              <input type="checkbox" value="" ng-model="updateSectionCtrl.isOnline">
+            </label>
+          </div>
+        </div>
+    </div>
+    
+    
+    <div class="form-group">
+        <label class="col-md-3 col-sm-3 col-xs-12 control-label">Days
+        </label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+        <div class="btn-group">
+          <button class="btn btn-info btn-lg" type="button" ng-class="{active : updateSectionCtrl.isMonday}" ng-click="updateSectionCtrl.addDay('M')">Monday</button>
+            <button class="btn btn-info btn-lg" type="button" ng-class="{active : updateSectionCtrl.isTuesday}" ng-click="updateSectionCtrl.addDay('T')">Tuesday</button>
+            <button class="btn btn-info btn-lg" type="button" ng-class="{active : updateSectionCtrl.isWednesday}" ng-click="updateSectionCtrl.addDay('W')">Wednesday</button>
+            <button class="btn btn-info btn-lg" type="button" ng-class="{active : updateSectionCtrl.isThursday}" ng-click="updateSectionCtrl.addDay('R')">Thursday</button>
+            <button class="btn btn-info btn-lg" type="button" ng-class="{active : updateSectionCtrl.isFriday}" ng-click="updateSectionCtrl.addDay('F')">Friday</button>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    
+
+  <div class="ln_solid"></div>
+  <div class="form-group">
+    <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+
+      <button type="submit" class="btn btn-primary" ng-click="updateSectionCtrl.addSection()">Submit</button>
+    </div>
+  </div>
+
+</form>
