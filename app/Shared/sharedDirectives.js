@@ -24,3 +24,19 @@ shared.directive('colorLegend', ['globalFactory', function(globalFactory) {
   }
 }]);
 
+shared.directive('alert', [function() {
+  return {
+    replace: true,
+    scope: {
+        message: '=',
+        display: '=',
+        alertClass: '='
+    },
+    templateUrl: 'app/Shared/alert.html',
+    link: function(scope, element, attrs) {
+        
+        
+        
+    }
+  }
+}]);

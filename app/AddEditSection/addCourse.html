@@ -1,0 +1,29 @@
+
+  <div class="modal" id="addEventModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form name="addCourseForm">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Add New Course</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="eventTitle">Course Title</label>
+            <input name="eventTitle" id="eventTitle" class="form-control" type="text" placeholder="Ex: Circuits I" ng-model="title" required>
+            <span ng-show="addCourseForm.eventTitle.$touched && addCourseForm.eventTitle.$invalid" class="validation-message">The title is required</span>
+          </div>
+          <div class="form-group">
+            <label for="courseID">Course Number</label>
+            <input name="courseID" id="courseID" class="form-control" type="number" placeholder="Ex: 2111" ng-model="courseID" ng-min="1000" ng-max="9999" ng-step="1" ng-maxlength="4" required>
+              <span ng-show="addCourseForm.courseID.$touched && addCourseForm.courseID.$invalid" class="validation-message">The course number is required and needs to consist of 4 numbers</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="reset()">Close</button>
+          <button type="submit" class="btn btn-primary" ng-click="addCourse()" data-dismiss="modal" ng-disabled="addCourseForm.$invalid">Add Course</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>

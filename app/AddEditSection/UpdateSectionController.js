@@ -8,6 +8,9 @@ updateSectionModule.controller('UpdateSectionController', ['globalFactory', func
     self.isLab = false;
     self.isOnline = false;
     
+    self.message = "";
+    self.class = "alert-success";
+    self.display = false;
    
 
 

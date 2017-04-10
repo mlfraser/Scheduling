@@ -20,7 +20,7 @@
         
     	$dbh = new PDO(DSN, DBUSER, DBPASS, $options) or die('Cannot connect to database');
         
-        $query = $dbh->prepare("SELECT * FROM Course");
+        $query = $dbh->prepare("SELECT * FROM Course ORDER BY courseID");
         $query->execute();
         $courses = $query->fetchAll();
         

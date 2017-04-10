@@ -1,4 +1,6 @@
-<form class="form-horizontal form-label-left">
+<alert message="updateSectionCtrl.message" display="updateSectionCtrl.display" alert-class="updateSectionCtrl.class"></alert>
+<form class="form-horizontal form-label-left" name="submitSection" novalidate>
+    
     <h1>Add New Section</h1>
     
     
@@ -6,9 +8,13 @@
     <div class="form-group">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Section Identifier</label>
         <div class="col-md-9 col-sm-9 col-xs-12">
-          <input type="text" class="form-control" placeholder="Ex: 0A, L01" ng-model="updateSectionCtrl.sectionName">
+          <input type="text" name="sectionName" class="form-control" placeholder="Ex: 0A, L01" ng-model="updateSectionCtrl.sectionName" required>
+            <span ng-show="submitSection.sectionName.$touched && submitSection.sectionName.$invalid" class="validation-message">The section identifier is required</span>
         </div>
       </div>
+    
+    
+    
     <div class="form-group">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Section Title</label>
         <div class="col-md-9 col-sm-9 col-xs-12">
@@ -21,18 +27,19 @@
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Course</label>
         <div class="col-md-9 col-sm-9 col-xs-12">
             <div class="input-group">
-              <select class="form-control" ng-model="updateSectionCtrl.selectedCourse" convert-to-number>
+              <select class="form-control" name="course" ng-selected="updateSectionCtrl.selectedCourse" ng-model="updateSectionCtrl.selectedCourse" convert-to-number required>
                 
                 <option ng-repeat="course in updateSectionCtrl.courses" value="{{course.courseID}}">EE{{course.courseID}} - {{course.title}}</option>
               </select>
                 <span class="input-group-btn">
-                  <button type="button" class="btn btn-success" ng-click="updateSectionCtrl.open()">New...</button>
-              </span>
+                    <button class="btn btn-success" data-toggle="modal" data-target="#addEventModal">New...</button>
+                </span>
+               
+                
             </div>
+             <span ng-show="submitSection.course.$touched && submitSection.course.$invalid" class="validation-message">The course is required</span>
         </div>
       </div>
-    
-    <new-course-modal></new-course-modal>
     
     
     
@@ -40,29 +47,35 @@
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Start Time</label>
         <div class="col-md-9 col-sm-9 col-xs-12">
             <div class="input-group">
-          <select class="form-control" ng-model="updateSectionCtrl.selectedStartTime" convert-to-number>
+          <select class="form-control" name="startTime" ng-model="updateSectionCtrl.selectedStartTime" convert-to-number required>
             
             <option ng-repeat="course in updateSectionCtrl.times" value="{{course.timeID}}">{{course.timeStartEnd}}</option>
           </select>
              <span class="input-group-btn">
-                  <button type="button" class="btn btn-success">New...</button>
+                  <button class="btn btn-success" data-toggle="modal" data-target="#addStartTimeModal">New...</button>
               </span>
+             
         </div>
+            <span ng-show="submitSection.startTime.$touched && submitSection.startTime.$invalid" class="validation-message">The start time is required</span>
         </div>
       </div>
+    
+    
     
     <div class="form-group">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">End Time</label>
         <div class="col-md-9 col-sm-9 col-xs-12">
             <div class="input-group">
-          <select class="form-control" ng-model="updateSectionCtrl.selectedEndTime" convert-to-number>
+          <select class="form-control" name="endTime" ng-model="updateSectionCtrl.selectedEndTime" convert-to-number required>
             
             <option ng-repeat="course in updateSectionCtrl.times" value="{{course.timeID}}">{{course.timeStartEnd}}</option>
           </select>
              <span class="input-group-btn">
-                  <button type="button" class="btn btn-success">New...</button>
+                  <button  data-toggle="modal" data-target="#addEndTimeModal" class="btn btn-success">New...</button>
               </span>
+                
         </div>
+            <span ng-show="submitSection.endTime.$touched && submitSection.endTime.$invalid" class="validation-message">The end time is required</span>
       </div>
     </div>
     
@@ -71,67 +84,71 @@
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Room</label>
         <div class="col-md-9 col-sm-9 col-xs-12">
             <div class="input-group">
-          <select class="form-control" ng-model="updateSectionCtrl.selectedRoom" convert-to-number>
+          <select class="form-control" name="room" ng-model="updateSectionCtrl.selectedRoom" convert-to-number required>
             
             <option ng-repeat="course in updateSectionCtrl.rooms" value="{{course.roomID}}">{{course.buildingName}} {{course.roomNumber}}</option>
           </select>
              <span class="input-group-btn">
-                  <button type="button" class="btn btn-success">New...</button>
+                  <button class="btn btn-success" data-toggle="modal" data-target="#addRoomModal">New...</button>
               </span>
         </div>
+            <span ng-show="submitSection.room.$touched && submitSection.room.$invalid" class="validation-message">The room is required</span>
         </div>
       </div>
+    
+    
+        
+    <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Instructor</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            <div class="input-group">
+          <select class="form-control" name="instructor" ng-model="updateSectionCtrl.selectedInstructor" size="5" convert-to-number multiple required>
+            
+            <option ng-repeat="course in updateSectionCtrl.instructors" value="{{course.instructorID}}">{{course.name}}</option>
+          </select>
+             <span class="input-group-btn">
+                    <button class="btn btn-success btn-tall" data-toggle="modal" data-target="#addInstructorModal">New...</button>
+                </span>
+                
+            </div>
+            <span ng-show="submitSection.instructor.$touched && submitSection.instructor.$invalid" class="validation-message">The instructor is required</span>
+        </div>
+      </div>
+    
     
     <div class="form-group">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Semester</label>
         <div class="col-md-9 col-sm-9 col-xs-12">
             <div class="input-group">
-          <select class="form-control" ng-model="updateSectionCtrl.selectedSemester" convert-to-number>
+          <select class="form-control full-size-select" name="semester" ng-model="updateSectionCtrl.selectedSemester" convert-to-number required>
             
             <option ng-repeat="course in updateSectionCtrl.semesters" value="{{course.semesterID}}">{{course.semesterType}}</option>
           </select>
-             <span class="input-group-btn">
-                  <button type="button" class="btn btn-success">New...</button>
-              </span>
-            </div>
         </div>
+            <span ng-show="submitSection.semester.$touched && submitSection.semester.$invalid" class="validation-message">The semester is required</span>
       </div>
-    
-    <div class="form-group">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12">Instructor</label>
-        <div class="col-md-9 col-sm-9 col-xs-12">
-            <div class="input-group">
-          <select class="form-control" ng-model="updateSectionCtrl.selectedInstructor" convert-to-number multiple>
-            
-            <option ng-repeat="course in updateSectionCtrl.instructors" value="{{course.instructorID}}">{{course.name}}</option>
-          </select>
-             <span class="input-group-btn">
-                  <button type="button" class="btn btn-success">New...</button>
-              </span>
-            </div>
-        </div>
-      </div>
-    
-    
+    </div>
     
     <div class="form-group">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Year</label>
         <div class="col-md-9 col-sm-9 col-xs-12">
-          <input type="text" class="form-control" placeholder="Ex: 2017" ng-model="updateSectionCtrl.year">
+          <input type="number" ng-maxlength="4" ng-min="2000" ng-max="9999" name="year" class="form-control" placeholder="Ex: 2017" ng-model="updateSectionCtrl.year" required>
+            <span ng-show="submitSection.year.$touched && submitSection.year.$invalid" class="validation-message">The year is required</span>
         </div>
       </div>
     
     <div class="form-group">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Credits</label>
         <div class="col-md-9 col-sm-9 col-xs-12">
-          <input type="text" class="form-control" placeholder="Ex: 3" ng-model="updateSectionCtrl.credits">
+          <input type="number" name="credits" ng-maxlength="2" class="form-control" placeholder="Ex: 3" ng-model="updateSectionCtrl.credits" required>
+            <span ng-show="submitSection.credits.$touched && submitSection.credits.$invalid" class="validation-message">The number of credits is required</span>
         </div>
       </div>
     
     <div class="form-group">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">CRN</label>
         <div class="col-md-9 col-sm-9 col-xs-12">
-          <input type="text" class="form-control"  ng-model="updateSectionCtrl.crn">
+          <input type="number" ng-maxlength="6" class="form-control"  ng-model="updateSectionCtrl.crn">
         </div>
       </div>
     
@@ -181,8 +198,18 @@
   <div class="form-group">
     <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
 
-      <button type="submit" class="btn btn-primary" ng-click="updateSectionCtrl.addSection()">Submit</button>
+      <button type="submit" ng-disabled="submitSection.$invalid" class="btn btn-primary" ng-click="updateSectionCtrl.addSection()">Submit</button>
     </div>
   </div>
 
 </form>
+
+<add-course courses="updateSectionCtrl.courses" selected-course="updateSectionCtrl.selectedCourse" message="updateSectionCtrl.message" display="updateSectionCtrl.display" alert-class="updateSectionCtrl.class" ></add-course>
+
+<add-instructor instructors="updateSectionCtrl.instructors" selected-instructor="updateSectionCtrl.selectedInstructor" message="updateSectionCtrl.message" display="updateSectionCtrl.display" alert-class="updateSectionCtrl.class" ></add-instructor>
+
+<add-start-time start-times="updateSectionCtrl.times" selected-time="updateSectionCtrl.selectedStartTime" message="updateSectionCtrl.message" display="updateSectionCtrl.display" alert-class="updateSectionCtrl.class" ></add-start-time>
+
+<add-end-time end-times="updateSectionCtrl.times" selected-time="updateSectionCtrl.selectedEndTime" message="updateSectionCtrl.message" display="updateSectionCtrl.display" alert-class="updateSectionCtrl.class" ></add-end-time>
+
+<add-room rooms="updateSectionCtrl.rooms" selected-room="updateSectionCtrl.selectedRoom" message="updateSectionCtrl.message" display="updateSectionCtrl.display" alert-class="updateSectionCtrl.class" ></add-room>

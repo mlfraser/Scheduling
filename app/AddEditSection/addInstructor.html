@@ -1,0 +1,24 @@
+
+  <div class="modal" id="addInstructorModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form name="addInstructorForm">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Add Instructor</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="instructorName">Instructor Last Name</label>
+            <input name="instructorName" id="instructorName" class="form-control" type="text" placeholder="Ex: Archer" ng-model="instructorName" required>
+            <span ng-show="addInstructorForm.instructorName.$touched && addInstructorForm.instructorName.$invalid" class="validation-message">The instructor name is required</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="reset()">Close</button>
+          <button type="submit" class="btn btn-primary" ng-click="addInstructor()" data-dismiss="modal" ng-disabled="addInstructorForm.$invalid">Add Instructor</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>

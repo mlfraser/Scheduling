@@ -112,6 +112,53 @@ shared.factory('globalFactory', ['$http', function($http) {
         });
     };
     
+    service.addCourse = function(courseID, title) {
+        return $http({
+            url: 'app/AddEditSection/AddCourse.php',
+            method: 'GET',
+            params: {
+                courseID : courseID,
+                title : title
+            },
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+    };
+    
+    service.addTime = function(time) {
+        return $http({
+            url: 'app/AddEditSection/AddTime.php',
+            method: 'GET',
+            params: {
+                time : time
+            },
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+    };
+    
+    service.addInstructor = function(instructor) {
+        return $http({
+            url: 'app/AddEditSection/AddInstructor.php',
+            method: 'GET',
+            params: {
+                instructor : instructor
+            },
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+    };
+    
+    service.addRoom = function(roomNumber, buildingNumber, capacity) {
+        return $http({
+            url: 'app/AddEditSection/AddRoom.php',
+            method: 'GET',
+            params: {
+                roomNumber: roomNumber,
+                buildingNumber: buildingNumber,
+                capacity: capacity
+            },
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+    };
+    
     
     //Get/Set for course history ID data passing
     service.getCourseHistoryID = function() {

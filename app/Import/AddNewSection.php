@@ -12,11 +12,10 @@
         include '/itss/local/home/ecescheduling/public_html/resources/functions/validate.php';
         
         //Parameters, with data propery sifted through
-        $year = testInput(($_REQUEST['year']);
+        $year = testInput($_REQUEST['year']);
         $courseID = testInput($_REQUEST['courseID']);
         $courseName = testInput($_REQUEST['courseName']);
-        $building = testInput($_REQUEST['building']);
-        $buildingID = testInput($REQUEST['buildingID']);
+        $buildingID = $REQUEST['building'];
         $room = testInput($_REQUEST['room']);
         $roomID = testInput($_REQUEST['roomID']);
         $capacity = testInput($_REQUEST['capacity']);
@@ -36,13 +35,7 @@
         $days = testInput($_REQUEST['days']);
         $profName = json_decode(stripslashes($_REQUEST['profName']));
         
-        //validate data coming in
-        if($year == null || $year == "") {
-            throw new Exception('The year passed in is not defined', 1);
-        }
-        if($courseID == null || $courseID == "") {
-            throw new Exception('The semester passed in is not defined', 1);
-        }
+        echo $buildingID;
         
         
     	$options = array(
@@ -64,24 +57,26 @@
             //GET/UPDATE ROOM AND BUILDING DATA
             $exists = $dbh->query("SELECT * FROM Room r
                                    JOIN Building b on b.buildingID = r.buildingID
-                                   WHERE r.roomNumber = $room && b.buildingID = $building");
+                                   WHERE r.roomNumber = $room && b.buildingID = $buildingID");
+            
             if(($exists->rowCount()) <= 0) {
                 //Check if building exists
-                $buildingExists = $dbh->query("SELECT * FROM Building WHERE buildingID = $building");
+                $buildingExists = $dbh->query("SELECT * FROM Building WHERE buildingID = $buildingID");
                 if(($buildingExists->rowCount()) <= 0) {
-                    $dbh->query("INSERT INTO Building(buildingID) VALUES ('$building')");
-                    $buildingExists = $dbh->query("SELECT * FROM Building WHERE buildingID = $building");
+                    $dbh->query("INSERT INTO Building(buildingID) VALUES ('$buildingID')");
+                    $buildingExists = $dbh->query("SELECT * FROM Building WHERE buildingID = $buildingID");
                 }
+                if(!isset($capacity)) $capacity = 0;
 
-                $dbh->query("INSERT INTO Room(roomNumber, buildingID, capacity) VALUES ('$room', '$building', '$capacity')");
+                $dbh->query("INSERT INTO Room(roomNumber, buildingID, capacity) VALUES ('$room', '$buildingID', '$capacity')");
                 $exists = $dbh->query("SELECT * FROM Room r
                                    JOIN Building b on b.buildingID = r.buildingID
-                                   WHERE r.roomNumber = $room && b.buildingID = $building");
+                                   WHERE r.roomNumber = $room && b.buildingID = $buildingID");
             }
             $exists = $exists->fetch();
     	   $roomID = $exists["roomID"];
         }
-    	
+    	echo $room." ".$buildingID;
     	
         
         /****************************************************************************************/
@@ -176,6 +171,7 @@
             }  
         }
         
+        /*
         //convert to json string
         echo json_encode(array(
             'success' => array(
@@ -183,6 +179,7 @@
                 'message' => "Section was successfully updated.",
             ),
         ));
+        */
     }
     catch(Exception $e)
     {
