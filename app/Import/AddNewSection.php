@@ -35,15 +35,12 @@
         $days = testInput($_REQUEST['days']);
         $profName = json_decode(stripslashes($_REQUEST['profName']));
         
-        echo $buildingID;
-        
         
     	$options = array(
     	    PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
     	);
         
     	$dbh = new PDO(DSN, DBUSER, DBPASS, $options) or die('Cannot connect to database');
-        
         
         
         //CHECK IF COURSE EXISTS AND ADD IF NOT
@@ -53,7 +50,7 @@
     	}
         
         /******************************************************************************************/
-        if(!isset($roomID)) {
+        if($roomID == "" || $roomID == null || !isset($roomID)) {
             //GET/UPDATE ROOM AND BUILDING DATA
             $exists = $dbh->query("SELECT * FROM Room r
                                    JOIN Building b on b.buildingID = r.buildingID
@@ -76,18 +73,17 @@
             $exists = $exists->fetch();
     	   $roomID = $exists["roomID"];
         }
-    	echo $room." ".$buildingID;
     	
         
         /****************************************************************************************/
-        if(!isset($semesterID)){
+        if($semesterID == "" || $semesterID == null || !isset($semesterID)){
             //GET SEMESTER DATA
             $exists = $dbh->query("SELECT * FROM Semester WHERE semesterType LIKE '$semester'")->fetch();
 
             $semesterID = $exists["semesterID"];
         }
         /****************************************************************************************/
-        if(!isset($startTimeID)){
+        if($startTimeID == "" || $startTimeID == null || !isset($startTimeID)){
             //GET START TIME DATA
             $exists = $dbh->query("SELECT * FROM Time WHERE timeStartEnd LIKE '$startTime'");
             if(($exists->rowCount()) <= 0) {
@@ -100,7 +96,7 @@
         
         /****************************************************************************************/
         
-        if(!isset($endTimeID)){
+        if($endTimeID == "" || $endTimeID == null || !isset($endTimeID)){
             //GET END TIME DATA
             $exists = $dbh->query("SELECT * FROM Time WHERE timeStartEnd LIKE '$endTime'");
             if(($exists->rowCount()) <= 0) {
@@ -110,20 +106,20 @@
             $exists = $exists->fetch();
             $endTimeID = $exists["timeID"];
         }
-        
         /****************************************************************************************/
-        if(!isset($sectionID)){
+        $update = false;
+        if($sectionID == "" || $sectionID == null || !isset($sectionID)){
             //ADD SECTION
             $dbh->query("INSERT INTO Section(courseID, CRN, sectionName, startTimeID, endTimeID, roomID, year, semesterID, typeID, credits, isLab, sectionTitle) VALUES ('$courseID', '$crn', '$sectionName', '$startTimeID', '$endTimeID', '$roomID', '$year', '$semesterID', '$typeID', '$credits', '$isLab', '$sectionTitle')");
             $sectionID = $dbh->lastInsertID();
         }
         else{
+            $update = true;
             $dbh->query("UPDATE Section SET courseID = '$courseID', CRN = '$crn', sectionName = '$sectionName', startTimeID = '$startTimeID', endTimeID = '$endTimeID', roomID = '$roomID', year = '$year', semesterID = '$semesterID', type = '$typeID', credits = '$credits', isLab = '$isLab', sectionTitle = '$sectionTitle' WHERE sectionID = '$sectionID'");
         }
-        
         /****************************************************************************************/
         
-        if(!isset($sectionID)){
+        if($update){
             $dbh->query("DELETE FROM SectionDayMapping WHERE sectionID = ".$sectionID);
         }
         
@@ -141,9 +137,8 @@
         	$dayID = $exists['dayID'];
         	$dbh->query("INSERT INTO SectionDayMapping(sectionID, dayID) VALUES ('$sectionID', '$dayID')");
     	}
-        
         /***************************************************************************************/
-        if(isset($sectionID)) {
+        if($update) {
             $dbh->query("DELETE FROM SectionInstructorMapping WHERE sectionID = ".$sectionID);
         }
         if(is_int($profName)) {
@@ -171,7 +166,6 @@
             }  
         }
         
-        /*
         //convert to json string
         echo json_encode(array(
             'success' => array(
@@ -179,7 +173,7 @@
                 'message' => "Section was successfully updated.",
             ),
         ));
-        */
+        
     }
     catch(Exception $e)
     {

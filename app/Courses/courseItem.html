@@ -6,4 +6,5 @@
     <a  ng-repeat="item in Instructors" ui-sref="instructor-history" ng-click="getInstructor(item.InstructorID, item.Name)">
         <h5>{{item.Name}}</h5>
     </a>
+    <span style=""><a ui-sref="update-section" ng-click="editSection()"><b>Edit </b><i class="fa fa-pencil"></i></a></span>
 </div>

@@ -69,6 +69,7 @@ courseModule.directive('cItem',['globalFactory', function(globalFactory){
                 scope.RoomNumber = scope.course.RoomNumber;
                 scope.BuildingName = scope.course.BuldingName;
                 scope.Instructors = scope.course.Instructors;
+                scope.SectionID = scope.course.SectionID;
                 
                 
                 startTime = scope.course.StartTime;
@@ -78,7 +79,7 @@ courseModule.directive('cItem',['globalFactory', function(globalFactory){
                 
                 scope.Color = {
                     'background-color' : '#' + scope.course.Hex,
-                    'height' : scope.time
+                    'height' : scope.time + 20
                 };
                 scope.getCourse = function(id) {
                     globalFactory.setCourseHistoryID(id);
@@ -87,6 +88,10 @@ courseModule.directive('cItem',['globalFactory', function(globalFactory){
                 scope.getInstructor = function(id, name) {
                     globalFactory.setInstructorHistoryID(id,name);
                 };
+                
+                scope.editSection = function() {
+                    globalFactory.editSection(scope.SectionID);
+                }
             }
         }
     }

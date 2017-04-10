@@ -3,6 +3,8 @@ shared.factory('globalFactory', ['$http', function($http) {
     var courseHistoryID = 0;
     var instructorHistoryID = 0;
     var instructorHistoryName = "";
+    var sectionID = 0;
+    var isUpdate = false;
     
     service.getSemester = function() {
         return $http({
@@ -159,6 +161,29 @@ shared.factory('globalFactory', ['$http', function($http) {
         });
     };
     
+    //get/set for editing section information
+    service.editSection = function(id) {
+        sectionID = id;
+        isUpdate = true;
+    }
+    service.getSection = function() {
+        isUpdate = false;
+        var x = sectionID;
+        sectionID = 0;
+        if(x != 0) { 
+            return $http({
+                url: 'app/Shared/GetSectionInfo.php',
+                method: 'GET',
+                params: {
+                    sectionID: x
+                },
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            });
+        }
+        else {
+            return false;
+        }
+    }
     
     //Get/Set for course history ID data passing
     service.getCourseHistoryID = function() {
