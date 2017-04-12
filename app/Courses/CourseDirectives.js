@@ -84,7 +84,7 @@ courseModule.directive('cItem',['globalFactory', function(globalFactory){
                 scope.getCourse = function(id) {
                     globalFactory.setCourseHistoryID(id);
                 
-            }
+                }
                 scope.getInstructor = function(id, name) {
                     globalFactory.setInstructorHistoryID(id,name);
                 };

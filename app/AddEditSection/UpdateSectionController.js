@@ -27,7 +27,7 @@ updateSectionModule.controller('UpdateSectionController', ['globalFactory', '$ti
             self.selectedStartTime = result.startTimeID;
             self.selectedEndTime = result.endTimeID;
             self.crn = parseInt(result.crn);
-            self.typeID = !!parseInt(result.typeID) - 1;
+            self.isOnline = !!(parseInt(result.typeID) - 1);
             self.isLab = !!parseInt(result.isLab);
             self.credits = parseInt(result.credits);
             if(result.days.toString().indexOf("M") > -1) {
@@ -39,7 +39,7 @@ updateSectionModule.controller('UpdateSectionController', ['globalFactory', '$ti
             if(result.days.toString().indexOf("W") > -1) {
                 self.isWednesday = true;
             }
-            if(result.days.toString().indexOf("H") > -1) {
+            if(result.days.toString().indexOf("R") > -1) {
                 self.isThursday = true;
             }
             if(result.days.toString().indexOf("F") > -1) {

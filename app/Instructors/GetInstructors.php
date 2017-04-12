@@ -44,7 +44,7 @@
         //loop through instructors to construct object
         foreach($results as $r){
             //find all courses
-            $query = $dbh->prepare("SELECT s.sectionName, ts.timeStartEnd AS startTime, te.timeStartEnd AS endTime, c.title, s.credits, s.isLab, c.courseID, s.sectionID FROM Section s
+            $query = $dbh->prepare("SELECT s.sectionName, ts.timeStartEnd AS startTime, te.timeStartEnd AS endTime, c.title, s.credits, s.isLab, c.courseID, co.hex, s.sectionID FROM Section s
                                     JOIN Instructor i
                                     JOIN Course c on c.courseID = s.courseID
                                     JOIN SectionInstructorMapping si on i.instructorID = si.instructorID AND s.sectionID = si.sectionID
@@ -52,6 +52,7 @@
                                     JOIN Time ts on ts.timeID = s.startTimeID
                                     JOIN Time te on te.timeID = s.endTimeID
                                     JOIN Type t on t.typeID = s.typeID
+                                    JOIN ColorCoding co on SUBSTR(s.courseID,1,1) LIKE SUBSTR(co.key, 1,1)
                                     WHERE sm.semesterType LIKE '".$semester."%' && s.year = '".$year."' && i.instructorID = '".$r["instructorID"]."'");
             $query->execute();
             $cResults = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -76,7 +77,8 @@
                     'IsLab' => $c["isLab"],
                     'CourseID' => $c["courseID"],
                     'SectionID' => $c["sectionID"],
-                    'Days' => $days
+                    'Days' => $days,
+                    'Hex' => $c["hex"]
                 );
                 array_push($courses, $course);
             }

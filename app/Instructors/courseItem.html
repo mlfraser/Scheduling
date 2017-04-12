@@ -1,42 +1,10 @@
-<div class="col-md-3 col-sm-6 col-xs-12">
-        <div class="x_panel">
-          <div class="x_title" >
-            <a ui-sref="course-history" ng-click="getCourse(courseID)">
-                <h2> EE{{courseID}} </h2>
-            </a>
-            <ul class="nav navbar-right panel_toolbox">
-              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-              </li>
-              <li><a ><i class="fa fa-pencil"></i></a>
-              </li>  
-              <li><a ><i class="fa fa-close"></i></a>
-              </li>
-            </ul>
-            <div class="clearfix"></div>
-          </div>
-          <div class="x_content">
-            <table class="table table-striped">
-              <tr>
-                  <td><b>Days: </b></td>
-                  <td>{{days}}</td> 
-              </tr>
-              <tr>
-                  <td><b>Time:</b></td>
-                  <td>{{startTime}}-{{endTime}}</td>
-              </tr>
-              <tr>
-                  <td><b>Section: </b></td>
-                  <td>{{sectionName}}</td>
-              </tr>
-              <tr ng-if="isOnline">
-                  <td><b>Online</b></td>
-                  <td></td>
-              </tr>
-                  
-            </table>
+<div class="col-sm-2">
+    <div class="course-box" ng-style="Color">
+        <a ui-sref="course-history" ng-click="getCourse(courseID)">
+            <center><h4>EE{{courseID}} {{sectionName}}</h4></center>
+        </a>
+        <center><h5>{{startTime}}-{{endTime}} {{days}}</h5></center>
 
-
-
-          </div>
-        </div>
+        <span><center><a ui-sref="update-section" ng-click="editSection()"><b>Edit </b><i class="fa fa-pencil"></i></a></center></span>
     </div>
+</div>

@@ -30,7 +30,7 @@
     	$dbh = new PDO(DSN, DBUSER, DBPASS, $options) or die('Cannot connect to database');
         
        
-        $query = $dbh->prepare("SELECT c.title, t.classType, s.roomID, s.sectionID, s.sectionName, s.typeID, s.credits, s.CRN, s.isLab, s.dates, sm.semesterType, s.year, st.timeStartEnd as startTime, et.timeStartEnd as endTime FROM Section s
+        $query = $dbh->prepare("SELECT c.title, t.classType, s.roomID, s.sectionID, s.sectionName, s.typeID, s.credits, s.CRN, s.isLab, sm.semesterType, s.year, st.timeStartEnd as startTime, et.timeStartEnd as endTime FROM Section s
                                 JOIN Semester sm on sm.semesterID = s.semesterID
                                 JOIN Time st on st.timeID = s.startTimeID
                                 JOIN Time et on et.timeID = s.endTimeID
@@ -81,7 +81,6 @@
                 'credits' => $r["credits"],
                 'CRN' => $r["CRN"],
                 'isLab' => $r["isLab"],
-                'dates' => $r["dates"],
                 'semester' => $r["semesterType"],
                 'year' => $r["year"],
                 'room' => $rResults["buildingName"]." ".$rResults["roomNumber"],

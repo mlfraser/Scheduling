@@ -79,8 +79,29 @@ instructorModule.directive('courseItem',['globalFactory', function(globalFactory
                 scope.getCourse = function(id) {
                     globalFactory.setCourseHistoryID(id).success(function(data){
                         
-    });
+                    });
                 };
+                
+                
+                
+                startTime = scope.course.StartTime;
+                endTime = scope.course.EndTime;
+                scope.time = ((parseInt(endTime.substring(0,2)) * 60 + parseInt(endTime.substring(3,5))) - (parseInt(startTime.substring(0,2)) * 60 + parseInt(startTime.substring(3,5)))) * 2;
+                
+                
+                scope.Color = {
+                    'background-color' : '#' + scope.course.Hex,
+                    'width' : scope.time + 20,
+                    'height' : '100px'
+                };
+                scope.getCourse = function(id) {
+                    globalFactory.setCourseHistoryID(id);
+                
+                }
+                
+                scope.editSection = function() {
+                    globalFactory.editSection(scope.sectionID);
+                }
             }
         }
     }

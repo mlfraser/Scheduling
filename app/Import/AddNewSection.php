@@ -115,7 +115,7 @@
         }
         else{
             $update = true;
-            $dbh->query("UPDATE Section SET courseID = '$courseID', CRN = '$crn', sectionName = '$sectionName', startTimeID = '$startTimeID', endTimeID = '$endTimeID', roomID = '$roomID', year = '$year', semesterID = '$semesterID', type = '$typeID', credits = '$credits', isLab = '$isLab', sectionTitle = '$sectionTitle' WHERE sectionID = '$sectionID'");
+            $dbh->query("UPDATE Section SET courseID = '$courseID', CRN = '$crn', sectionName = '$sectionName', startTimeID = '$startTimeID', endTimeID = '$endTimeID', roomID = '$roomID', year = '$year', semesterID = '$semesterID', typeID = '$typeID', credits = '$credits', isLab = '$isLab', sectionTitle = '$sectionTitle' WHERE sectionID = '$sectionID'");
         }
         /****************************************************************************************/
         
@@ -170,6 +170,7 @@
         echo json_encode(array(
             'success' => array(
                 'result' => $sectionID,
+                'roomID' => $roomID,
                 'message' => "Section was successfully updated.",
             ),
         ));
