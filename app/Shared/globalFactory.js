@@ -25,6 +25,18 @@ shared.factory('globalFactory', ['$http', function($http) {
         });
     };
     
+    service.updateBuilding = function(id, name) {
+        return $http({
+           url: 'app/Buildings/UpdateBuilding.php',
+            method: 'GET',
+            params: {
+                buildingID: id,
+                buildingName: name
+            },
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+    };
+    
     service.getRooms = function(semester, year) {
         return $http({
            url: 'app/Rooms/GetRooms.php',
@@ -72,6 +84,16 @@ shared.factory('globalFactory', ['$http', function($http) {
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         });
     };
+    
+    service.getSectionHistory = function() {
+        return $http({
+           url: 'app/SectionHistory/GetSectionHistory.php',
+            method: 'GET',
+            params: {
+            },
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+    };
 
      service.getInstructorHistory = function(instructorID) {
         return $http({
@@ -97,6 +119,16 @@ shared.factory('globalFactory', ['$http', function($http) {
     service.getDataForSections = function() {
         return $http({
            url: 'app/AddEditSection/GetCourseOptions.php',
+            method: 'GET',
+            params: {
+            },
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+    };
+    
+    service.getBuildings = function() {
+        return $http({
+           url: 'app/Buildings/GetBuildings.php',
             method: 'GET',
             params: {
             },
