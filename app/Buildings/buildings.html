@@ -1,0 +1,46 @@
+<alert message="buildingCtrl.message" display="buildingCtrl.display" alert-class="buildingCtrl.class"></alert>
+
+<div align="center">
+    <table class="table small-table">
+        <thead>
+            <tr>
+                <th>Building Number</th>
+                <th>Building Name</th>
+                <th>Edit</th>
+            </tr>      
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in buildingCtrl.buildings">
+                <td>{{item.buildingID}}</td>
+                <td>{{item.buildingName}}</td>
+                <td><a data-toggle="modal" ng-click="buildingCtrl.setBuilding(item.buildingID, item.buildingName)" data-target="#editBuildingModal">Edit</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+  <div class="modal" id="editBuildingModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form name="editBuildingForm">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Edit Name for Building {{buildingCtrl.selectedBuildingNumber}}</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="buildingName">Building Name</label>
+            <input name="buildingName" id="buildingName" class="form-control" type="text" ng-model="buildingCtrl.selectedBuildingName" required>
+            <span ng-show="editBuildingForm.buildingName.$touched && editBuildingForm.buildingName.$invalid" class="validation-message">The building name is required</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" ng-click="buildingCtrl.updateBuilding()" data-dismiss="modal" ng-disabled="editBuildingForm.$invalid">Update Building Name</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
