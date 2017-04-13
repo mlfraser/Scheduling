@@ -1,10 +1,27 @@
-shared.directive('navbar', [function() {
+shared.directive('navbar', ['$window', function($window) {
   return {
     replace: true,
     scope: {},
     templateUrl: 'app/Shared/navbar.html',
     link: function(scope, element, attrs) {
-      
+        if($window.innerWidth < 1000) {
+            $('body').addClass('nav-sm');
+            $('body').removeClass('nav-md');
+        }
+        else {
+            $('body').addClass('nav-md');
+            $('body').removeClass('nav-sm');
+        }
+      angular.element($window).bind('resize', function () {
+          if($window.innerWidth < 1000) {
+            $('body').addClass('nav-sm');
+            $('body').removeClass('nav-md');
+        }
+        else {
+            $('body').addClass('nav-md');
+            $('body').removeClass('nav-sm');
+        }
+    });
     }
   }
 }]);
