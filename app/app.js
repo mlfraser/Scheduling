@@ -6,7 +6,7 @@ var roomModule = angular.module('roomModule',                           ['shared
 var courseModule = angular.module('courseModule',                       ['shared']);
 var courseHistoryModule = angular.module('courseHistoryModule',         ['shared']);
 var instructorHistoryModule = angular.module('instructorHistoryModule', ['shared']);
-var sectionHistoryModule = angular.module('sectionHistoryModule',       ['shared']);
+var sectionHistoryModule = angular.module('sectionHistoryModule',       ['shared', 'datatables']);
 
 var updateSectionModule = angular.module('updateSectionModule',         ['shared']);
 var importModule = angular.module('importModule',                       ['shared', 'ngFileUpload']);
