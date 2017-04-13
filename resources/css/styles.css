@@ -84,6 +84,10 @@ border-color: #5cb85c;
     height: 109%;
 }
 
+.small-table {
+    width: 75%;
+}
+
 
 /* FORM VALIDATION*/
 input.ng-invalid.ng-touched {
