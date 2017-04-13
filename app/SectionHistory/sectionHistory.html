@@ -1,0 +1,37 @@
+<table datatable="ng" class="row-border hover table">
+     <thead>
+        <tr>
+            <th>Course</th>
+            <th>CRN</th>
+            <th>Instructor</th>
+            <th>Credits</th>
+            <th>Semester</th>
+            <th>Year</th>
+            <th>On Campus/Online</th>
+            <th>Lab?</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Location</th>
+            <th>Days</th>
+            <th>Edit</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="item in sectionHistoryCtrl.course">
+            <td><a ui-sref="course-history" ng-click="sectionHistoryCtrl.getCourse(item.courseID)">EE{{item.courseID}}</a></td>
+            <td>{{item.CRN}}</td>
+            <td><a ng-repeat="i in item.instructors" ui-sref="instructor-history" ng-click="sectionHistoryCtrl.getInstructor(i.instructorID, i.name)">{{i.name}}</a></td>
+            <td>{{item.credits}}</td>
+            <td>{{item.semester}}</td>
+            <td>{{item.year}}</td>
+            <td>{{item.classType}}</td>
+            <td ng-if="item.isLab == 1">Yes</td>
+            <td ng-if="item.isLab == 0">No</td>
+            <td>{{item.startTime}}</td>
+            <td>{{item.endTime}}</td>
+            <td>{{item.room}}</td>
+            <td>{{item.days}}</td>
+            <td><a ui-sref="update-section" ng-click="sectionHistoryCtrl.editSection(item.sectionID)"><b>Edit </b><i class="fa fa-pencil"></i></a></td>
+        </tr>
+    </tbody>
+</table>
