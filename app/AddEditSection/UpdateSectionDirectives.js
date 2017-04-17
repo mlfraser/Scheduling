@@ -337,3 +337,76 @@ courseModule.directive('addRoom', ['globalFactory', '$timeout', function(globalF
     }
   }
 }]);
+
+
+courseModule.directive('deleteSection', ['globalFactory', '$timeout', function(globalFactory, $timeout) {
+  return {
+    replace: true,
+    scope: {
+        parentScope: '=',
+        message: '=',
+        display: '=',
+        alertClass: '='
+    },
+    templateUrl: 'app/AddEditSection/deleteSection.html',
+    compile: function() {
+      return {
+        pre: function(scope, elem, attrs) {
+
+            scope.delete = function(){
+                globalFactory.deleteSection(scope.parentScope.sectionID).success(function(data){
+                    if(data.success) {
+                        
+                        scope.parentScope.pageTitle = "Add New";
+                        scope.parentScope.isUpdate = false;
+                        scope.parentScope.sectionID = null;
+                        scope.parentScope.sectionName = "";
+                        scope.parentScope.sectionTitle = "";
+                        scope.parentScope.year = "";
+                        scope.parentScope.selectedCourse = 0;
+                        scope.parentScope.selectedRoom = 0;
+                        scope.parentScope.selectedSemester = 0;
+                        scope.parentScope.selectedStartTime = 0;
+                        scope.parentScope.selectedEndTime = 0;
+                        scope.parentScope.crn = "";
+                        scope.parentScope.isOnline = false;
+                        scope.parentScope.isLab = false;
+                        scope.parentScope.credits = "";
+                        scope.parentScope.isMonday = false;
+
+                        scope.parentScope.isTuesday = false;
+
+                        scope.parentScope.isWednesday = false;
+
+                        scope.parentScope.isThursday = false;
+
+                        scope.parentScope.isFriday = false;
+
+                        scope.parentScope.selectedInstructor = [];
+                        
+                        scope.message = data.success.message;
+                        scope.display = true;
+                        scope.alertClass = "alert-success";
+                        $timeout(function(){
+                            scope.display = false;
+                        },10000);
+                        
+                    }
+                     else {
+                         scope.message = data.error.msg;
+                         scope.alertClass = "alert-danger";
+                         scope.display = true;
+                         
+                         $timeout(function(){
+                            scope.display = false;
+                        },10000);
+                     }
+                });
+                };
+        
+            }
+          
+        }
+      }
+    }
+  }]);

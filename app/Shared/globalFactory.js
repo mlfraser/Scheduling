@@ -85,6 +85,17 @@ shared.factory('globalFactory', ['$http', function($http) {
         });
     };
     
+    service.deleteSection = function(sectionID) {
+        return $http({
+           url: 'app/AddEditSection/DeleteSection.php',
+            method: 'GET',
+            params: {
+                sectionID: sectionID
+            },
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+    };
+    
     service.getSectionHistory = function() {
         return $http({
            url: 'app/SectionHistory/GetSectionHistory.php',

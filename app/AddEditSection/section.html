@@ -199,6 +199,8 @@
     <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
 
       <button type="submit" ng-disabled="submitSection.$invalid" class="btn btn-primary" ng-click="updateSectionCtrl.addSection()">Submit</button>
+        <button ng-show="updateSectionCtrl.isUpdate" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete Section</button>
+        
     </div>
   </div>
 
@@ -213,3 +215,4 @@
 <add-end-time end-times="updateSectionCtrl.times" selected-time="updateSectionCtrl.selectedEndTime" message="updateSectionCtrl.message" display="updateSectionCtrl.display" alert-class="updateSectionCtrl.class" ></add-end-time>
 
 <add-room rooms="updateSectionCtrl.rooms" selected-room="updateSectionCtrl.selectedRoom" message="updateSectionCtrl.message" display="updateSectionCtrl.display" alert-class="updateSectionCtrl.class" ></add-room>
+<delete-section parent-scope="updateSectionCtrl" message="updateSectionCtrl.message" display="updateSectionCtrl.display" alert-class="updateSectionCtrl.class" ></delete-section>

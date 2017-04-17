@@ -12,10 +12,12 @@ updateSectionModule.controller('UpdateSectionController', ['globalFactory', '$ti
             self.isLab = false;
             self.isOnline = false;
             self.pageTitle = "Add New";
+            self.isUpdate = false;
         }
     else {
         result.success(function(data){
             self.pageTitle = "Update";
+            self.isUpdate = true;
             result = data.success.result;
             self.sectionID = result.sectionID;
             self.sectionName = result.sectionName;
@@ -105,6 +107,10 @@ updateSectionModule.controller('UpdateSectionController', ['globalFactory', '$ti
                 self.message = data.success.message;
                  self.alertClass = "alert-success";
                  self.display = true;
+                
+                self.pageTitle = "Update";
+                self.sectionID = data.success.result;
+                self.isUpdate = true;
 
                  $timeout(function(){
                     self.display = false;
