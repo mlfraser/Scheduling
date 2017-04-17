@@ -1,10 +1,12 @@
-<div class="col-md-9">
+<alert message="roomCtrl.message" display="roomCtrl.display" alert-class="roomCtrl.alertClass"></alert>
+<div class="col-md-10">
+    <color-legend></color-legend>
 <div class="row" ng-repeat="item in roomCtrl.uiConfig">
     <div ui-calendar="item"></div>
     <hr>
 </div>
 </div>
-<div class="col-md-3">
+<div class="col-md-2">
     <room-semester-list semesters="roomCtrl.semesters"></room-semester-list>
 
 </div>

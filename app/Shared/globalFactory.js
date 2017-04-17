@@ -204,6 +204,19 @@ shared.factory('globalFactory', ['$http', function($http) {
         });
     };
     
+    service.updateSectionTime = function(sectionID, startTime, endTime) {
+        return $http({
+            url: 'app/Shared/UpdateSectionTime.php',
+            method: 'GET',
+            params: {
+                sectionID: sectionID,
+                startTime: startTime,
+                endTime: endTime
+            },
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+    };
+    
     //get/set for editing section information
     service.editSection = function(id) {
         sectionID = id;

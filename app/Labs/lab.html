@@ -1,9 +1,11 @@
-<div class="col-md-9">
+<alert message="labCtrl.message" display="labCtrl.display" alert-class="labCtrl.alertClass"></alert>
+<div class="col-md-10">
+    <color-legend></color-legend>
 <div class="row" ng-repeat="item in labCtrl.uiConfig">
     <div ui-calendar="item"></div>
     <hr>
 </div>
 </div>
-<div class="col-md-3">
+<div class="col-md-2">
     <lab-semester-list semesters="labCtrl.semesters"></lab-semester-list>
 </div>
