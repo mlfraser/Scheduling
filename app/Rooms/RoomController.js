@@ -1,4 +1,4 @@
-roomModule.controller('RoomController', ['globalFactory', function(globalFactory){
+roomModule.controller('RoomController', ['globalFactory','$state', function(globalFactory, $state){
     var self = this;
     
     self.editSection = function() {
@@ -11,7 +11,13 @@ roomModule.controller('RoomController', ['globalFactory', function(globalFactory
         self.semesters = data.success.result;
         globalFactory.getRooms(self.semester, self.year).success(function(data){
             self.uiConfig = data.success.result;
-            //self.uiConfig.calendar.dayClick = self.editSection;
+             angular.forEach(self.uiConfig, function(value, key) {
+                  value.eventClick = function(calEvent, jsEvent, view) {
+                                            globalFactory.editSection(calEvent.sectionID);
+                                            $state.transitionTo("update-section");
+                                        }
+              
+            });
         });
     });
     

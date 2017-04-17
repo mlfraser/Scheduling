@@ -46,13 +46,14 @@
         //loop through instructors to construct object
         foreach($results as $r){
             //find all courses
-            $query = $dbh->prepare("SELECT s.sectionName, s.sectionID, c.courseID, ts.timeStartEnd AS startTime, te.timeStartEnd AS endTime, s.year FROM Section s 
+            $query = $dbh->prepare("SELECT s.sectionName, s.sectionID, c.courseID, ts.timeStartEnd AS startTime, te.timeStartEnd AS endTime, s.year, co.hex FROM Section s 
                                     JOIN Room r on r.roomID = s.roomID
                                     JOIN Course c on c.courseID = s.courseID
                                     JOIN Building b on b.buildingID = r.buildingID
                                     JOIN Semester sm on sm.semesterID = s.semesterID
                                     JOIN Time ts on ts.timeID = s.startTimeID
                                     JOIN Time te on te.timeID = s.endTimeID
+                                    JOIN ColorCoding co on SUBSTR(s.courseID,1,1) LIKE SUBSTR(co.key, 1,1)
                                     WHERE r.roomID = ".$r["roomID"]);
             $query->execute();
             $cResults = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -96,9 +97,13 @@
                 
                 $course = array(
                     'title' => 'EE'.$c["courseID"].' '.$c["sectionName"],
+                    'sectionID' => $c["sectionID"],
                     'start' => $startTime,
                     'end' => $endTime,
-                    'dow' => $days
+                    'dow' => $days,
+                    'backgroundColor' => "#".$c["hex"],
+                    'eventTextColor' => '#000000',
+                    'textColor' => '#000000'
                    
                 );
                 array_push($courses, $course);

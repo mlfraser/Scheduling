@@ -1,4 +1,4 @@
-labModule.controller('LabController', ['globalFactory', function(globalFactory){
+labModule.controller('LabController', ['globalFactory','$state', function(globalFactory, $state){
     var self = this;
     
     globalFactory.getSemester().success(function(data){
@@ -7,7 +7,16 @@ labModule.controller('LabController', ['globalFactory', function(globalFactory){
         self.semesters = data.success.result;
         globalFactory.getLabs(self.semester, self.year).success(function(data){
             self.uiConfig = data.success.result;
+            
+            angular.forEach(self.uiConfig, function(value, key) {
+                  value.eventClick = function(calEvent, jsEvent, view) {
+                                            globalFactory.editSection(calEvent.sectionID);
+                                            $state.transitionTo("update-section");
+                                        }
+              
+            });
         });
     });
+    
     
 }]);
