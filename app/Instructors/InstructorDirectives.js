@@ -87,33 +87,38 @@ instructorModule.directive('courseItem',['globalFactory', function(globalFactory
                 var startTime = scope.course.StartTime;
                 var endTime = scope.course.EndTime;
                 
-                var hours = Number(startTime.match(/^(\d+)/)[1]);
-                var minutes = Number(startTime.match(/:(\d+)/)[1]);
-                var AMPM = startTime.match(/\s(.*)$/)[1];
-                if(AMPM == "pm" && hours<12) hours = hours+12;
-                if(AMPM == "am" && hours==12) hours = hours-12;
-                var sHours = hours.toString();
-                var sMinutes = minutes.toString();
-                if(hours<10) sHours = "0" + sHours;
-                if(minutes<10) sMinutes = "0" + sMinutes;
-                startTime = sHours + ":" + sMinutes;
+                if(startTime == "" || endTime == "" || startTime == "TBA" || endTime == "TBA"){
+                    scope.time = 100;
+                }
+                else {
+                    var hours = Number(startTime.match(/^(\d+)/)[1]);
+                    var minutes = Number(startTime.match(/:(\d+)/)[1]);
+                    var AMPM = startTime.match(/\s(.*)$/)[1];
+                    if(AMPM == "pm" && hours<12) hours = hours+12;
+                    if(AMPM == "am" && hours==12) hours = hours-12;
+                    var sHours = hours.toString();
+                    var sMinutes = minutes.toString();
+                    if(hours<10) sHours = "0" + sHours;
+                    if(minutes<10) sMinutes = "0" + sMinutes;
+                    startTime = sHours + ":" + sMinutes;
+
+                    hours = Number(endTime.match(/^(\d+)/)[1]);
+                    minutes = Number(endTime.match(/:(\d+)/)[1]);
+                    AMPM = endTime.match(/\s(.*)$/)[1];
+                    if(AMPM == "pm" && hours<12) hours = hours+12;
+                    if(AMPM == "am" && hours==12) hours = hours-12;
+                    sHours = hours.toString();
+                    sMinutes = minutes.toString();
+                    if(hours<10) sHours = "0" + sHours;
+                    if(minutes<10) sMinutes = "0" + sMinutes;
+                    endTime = sHours + ":" + sMinutes;
+
+                    var diff = Math.abs(new Date('2011/10/09 ' + endTime) - new Date('2011/10/09 ' + startTime));
+                    scope.time = Math.floor((diff/1000)/60) * 2;
+                }
                 
-                hours = Number(endTime.match(/^(\d+)/)[1]);
-                minutes = Number(endTime.match(/:(\d+)/)[1]);
-                AMPM = endTime.match(/\s(.*)$/)[1];
-                if(AMPM == "pm" && hours<12) hours = hours+12;
-                if(AMPM == "am" && hours==12) hours = hours-12;
-                sHours = hours.toString();
-                sMinutes = minutes.toString();
-                if(hours<10) sHours = "0" + sHours;
-                if(minutes<10) sMinutes = "0" + sMinutes;
-                endTime = sHours + ":" + sMinutes;
-                
-                var diff = Math.abs(new Date('2011/10/09 ' + endTime) - new Date('2011/10/09 ' + startTime));
                 
                 
-                
-                scope.time = Math.floor((diff/1000)/60) * 2;
                 
                 if((Math.floor(scope.time / 70) + 1) > 12 || (Math.floor(scope.time / 70) + 1) < 1) {
                     scope.classSize = "col-sm-12";

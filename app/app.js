@@ -20,14 +20,9 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', functio
       requireBase: false //must specify no <base> tag in index.html
     });
 
-    $urlRouterProvider.otherwise("/");
+    $urlRouterProvider.otherwise("/updateSection");
 
-    $stateProvider.state('home', {
-        url: "/",
-        templateUrl: "app/Home/home.html",
-        controller: "HomeController",
-        controllerAs: "homeCtrl"
-    }).state('labs', {
+    $stateProvider.state('labs', {
         url: "/labs",
         templateUrl: "app/Labs/lab.html",
         controller: "LabController",

@@ -29,7 +29,7 @@
          //GET/UPDATE ROOM AND BUILDING DATA
             $exists = $dbh->query("SELECT * FROM Room r
                                    JOIN Building b on b.buildingID = r.buildingID
-                                   WHERE r.roomNumber = $roomNumber AND b.buildingID = $buildingID");
+                                   WHERE r.roomNumber = '$roomNumber' AND b.buildingID = $buildingID");
 
             if(($exists->rowCount()) > 0) {
                 throw new Exception("The room already exists.", $exists->fetch()["roomID"]);
@@ -46,7 +46,7 @@
             $dbh->query("INSERT INTO Room(roomNumber, buildingID, capacity) VALUES ('$roomNumber', '$buildingID', '$capacity')");
             $exists = $dbh->query("SELECT * FROM Room r
                                JOIN Building b on b.buildingID = r.buildingID
-                               WHERE r.roomNumber = $roomNumber AND b.buildingID = $buildingID");
+                               WHERE r.roomNumber = '$roomNumber' AND b.buildingID = $buildingID");
             
             $exists = $exists->fetch();
             $room = array(

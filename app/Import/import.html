@@ -1,11 +1,120 @@
-Drop File:
-    <div ngf-drop ngf-select ng-model="files" class="drop-box" 
-        ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true"
-        accept="image/*,application/pdf" 
-        ngf-pattern="'image/*,application/pdf'">Drop pdfs or images here or click to upload</div>
-Files:
-    <ul>
-        <li ng-repeat="f in files" style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}</li>
-    </ul>
-    Upload Log:
-    <pre>{{log}}</pre>
+<alert message="importCtrl.message" display="importCtrl.display" alert-class="importCtrl.alertClass"></alert>
+<form class="form-horizontal form-label-left" name="importData" novalidate>
+    <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Semester</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            <div class="input-group">
+          <select class="form-control full-size-select" name="semester" ng-model="importCtrl.selectedSemester" convert-to-number required>
+
+            <option ng-repeat="course in importCtrl.semesters" value="{{course.semesterID}}">{{course.semesterType}}</option>
+          </select>
+        </div>
+            <span ng-show="importData.semester.$touched && importData.semester.$invalid" class="validation-message">The semester is required</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Year</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+          <input type="number" ng-maxlength="4" ng-min="2000" ng-max="9999" name="year" class="form-control" placeholder="Ex: 2017" ng-model="importCtrl.year" required>
+            <span ng-show="importData.year.$touched && importData.year.$invalid" class="validation-message">The year is required</span>
+        </div>
+      </div>
+
+    
+    <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">CSV File</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            <div class="input-group">
+                <div ngf-drop ngf-select ng-model="importCtrl.files" class="drop-box" 
+            ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true"
+            accept=".csv" 
+            >Drop csv file here or click to select</div>
+        </div>
+            
+      </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Files</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            <div class="input-group">
+                <ul>
+                    <li ng-repeat="f in importCtrl.files" style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}</li>
+                </ul>
+        </div>
+            
+      </div>
+    </div>
+        
+    
+    <div class="ln_solid"></div>
+  <div class="form-group">
+    <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+        <button type="submit" ng-disabled="importData.$invalid" class="btn btn-primary" ng-click="importCtrl.import()">Import</button>
+        
+    </div>
+  </div>    
+
+    
+</form>
+
+<div class="col-md-4 col-sm-12">
+    <h3>Success</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Line in File</th>
+                <th>CRN</th>
+                <th>Course</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="i in importCtrl.output.success">
+                <td>{{i.index}}</td>
+                <td>{{i.crn}}</td>
+                <td>{{i.course}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="col-md-4 col-sm-12">
+    <h3>Already Exists</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Line in File</th>
+                <th>CRN</th>
+                <th>Course</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="i in importCtrl.output.alreadyExists">
+                <td>{{i.index}}</td>
+                <td>{{i.crn}}</td>
+                <td>{{i.course}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="col-md-4 col-sm-12">
+    <h3>Failed</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Line in File</th>
+                <th>CRN</th>
+                <th>Course</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="i in importCtrl.output.error">
+                <td>{{i.index}}</td>
+                <td>{{i.crn}}</td>
+                <td>{{i.course}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
