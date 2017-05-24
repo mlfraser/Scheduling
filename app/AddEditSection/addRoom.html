@@ -23,6 +23,14 @@
             <input name="capacity" id="capacity" class="form-control" type="number" placeholder="Ex: 100" ng-model="capacity">
             <span ng-show="addRoomForm.capacity.$touched && addRoomForm.capacity.$invalid" class="validation-message">The capacity needs to be a number</span>
           </div>
+          <div class="form-group">
+            <label>Lab?</label>
+             <div class="checkbox">
+                <label>
+                  <input type="checkbox" ng-model="isLab">
+                </label>
+            </div>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="reset()">Close</button>

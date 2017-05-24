@@ -295,6 +295,7 @@ courseModule.directive('addRoom', ['globalFactory', '$timeout', function(globalF
                         room.capacity = scope.capacity;
                         room.roomID = data.success.result.roomID;
                         room.roomNumber = scope.roomNumber;
+                        room.isLab = scope.isLab;
                         
                         scope.rooms.push(room);
                         

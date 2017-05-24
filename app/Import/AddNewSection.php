@@ -41,6 +41,15 @@
         
     	$dbh = new PDO(DSN, DBUSER, DBPASS, $options) or die('Cannot connect to database');
         
+        /****************************************************************************************/
+        if($semesterID == "" || $semesterID == null || !isset($semesterID)){
+            //GET SEMESTER DATA
+            $exists = $dbh->query("SELECT * FROM Semester WHERE semesterType LIKE '$semester'")->fetch();
+
+            $semesterID = $exists["semesterID"];
+        }
+        /****************************************************************************************/
+        
         if($crn != 0) {
             $exists = $dbh->query("SELECT * FROM Section WHERE year = ".$year." AND crn = ".$crn." AND semesterID = ".$semesterID);
             if($exists->rowCount() > 0) throw new Exception("This course already exists.", 1);
@@ -71,8 +80,8 @@
                     $buildingExists = $dbh->query("SELECT * FROM Building WHERE buildingID = '$buildingID'");
                 }
                 if(!isset($capacity)) $capacity = 0;
-
-                $dbh->query("INSERT INTO Room(roomNumber, buildingID, capacity) VALUES ('$room', $buildingID, $capacity)");
+                
+                $dbh->query("INSERT INTO Room(roomNumber, buildingID, capacity, isLab) VALUES ('$room', $buildingID, $capacity, $isLab)");
                 $exists = $dbh->query("SELECT * FROM Room r
                                    JOIN Building b on b.buildingID = r.buildingID
                                    WHERE r.roomNumber = '$room' && b.buildingID = $buildingID");
@@ -82,14 +91,6 @@
     	   $roomID = $exists["roomID"];
         }
     	
-        
-        /****************************************************************************************/
-        if($semesterID == "" || $semesterID == null || !isset($semesterID)){
-            //GET SEMESTER DATA
-            $exists = $dbh->query("SELECT * FROM Semester WHERE semesterType LIKE '$semester'")->fetch();
-
-            $semesterID = $exists["semesterID"];
-        }
         /****************************************************************************************/
         if($startTimeID == "" || $startTimeID == null || !isset($startTimeID)){
             //GET START TIME DATA

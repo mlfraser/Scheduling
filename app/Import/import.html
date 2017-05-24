@@ -1,17 +1,5 @@
 <alert message="importCtrl.message" display="importCtrl.display" alert-class="importCtrl.alertClass"></alert>
 <form class="form-horizontal form-label-left" name="importData" novalidate>
-    <div class="form-group">
-        <label class="control-label col-md-3 col-sm-3 col-xs-12">Semester</label>
-        <div class="col-md-9 col-sm-9 col-xs-12">
-            <div class="input-group">
-          <select class="form-control full-size-select" name="semester" ng-model="importCtrl.selectedSemester" convert-to-number required>
-
-            <option ng-repeat="course in importCtrl.semesters" value="{{course.semesterID}}">{{course.semesterType}}</option>
-          </select>
-        </div>
-            <span ng-show="importData.semester.$touched && importData.semester.$invalid" class="validation-message">The semester is required</span>
-      </div>
-    </div>
 
     <div class="form-group">
         <label class="control-label col-md-3 col-sm-3 col-xs-12">Year</label>

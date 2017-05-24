@@ -5,10 +5,6 @@ importModule.controller('ImportController', ['globalFactory', '$timeout', functi
     self.alertClass = "alert-success";
     self.display = false;
     
-    globalFactory.getDataForSections().success(function(data){
-        self.semesters = data.success.result.Semesters;
-    });
-    
     self.import = function() {
         var file = self.files[0];   
         var reader = new FileReader();
@@ -132,11 +128,60 @@ importModule.controller('ImportController', ['globalFactory', '$timeout', functi
             params.endTime = courseData[9].substr(9,8);
             params.capacity = parseInt(courseData[10].substr(1, courseData[10].length - 1));
             params.profName = courseData[13].split(',');
+            var dates = courseData[14];
             params.room = courseData[15].substr(3,4);
             params.building = courseData[15].substr(0,2);
             params.year = self.year;
-            params.semesterID = self.selectedSemester;
             params.isLab = courseData[4].indexOf("L") >= 0 ? 1 : 0;
+            
+            params.semester = "";
+        
+            var startMonth = parseInt(dates.substring(0,2));
+            var endMonth = parseInt(dates.substring(6,8));
+            var startDay = parseInt(dates.substring(3,5));
+            var endDay = parseInt(dates.substring(9,11));
+
+            //calculate week difference between dates: will tell if track A/B/Full
+            var difference = ((endMonth * 30 + endDay) - (startMonth * 30 + startDay)) / 7;
+
+            if(startMonth <= 3) {
+                params.semester = "Spring";
+                if(difference > 8) {
+                    params.semester += "";
+                }
+                else if(startMonth == 1) {
+                    params.semester += " A";
+                }
+                else {
+                    params.semester += " B";
+                }
+            }
+            else if(endMonth > 10) {
+                params.semester = "Fall";
+                if(difference > 8) {
+                    params.semester += "";
+                }
+                else if(endMonth == 12) {
+                    params.semester += " B";
+                }
+                else {
+                    params.semester += " A";
+                }
+            }
+            else {
+                params.semester = "Summer";
+                if(difference > 8) {
+                    params.semester += "";
+                }
+                else if(endMonth == 8) {
+                    params.semester += " B";
+                }
+                else {
+                    params.semester += " A";
+                }
+            }
+            
+            
             
             globalFactory.addSection(params).success(function(data){
                 if(data.success) {
