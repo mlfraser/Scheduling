@@ -17,20 +17,17 @@
         
     	$dbh = new PDO(DSN, DBUSER, DBPASS, $options) or die('Cannot connect to database');
     	
-    	$query = $dbh->prepare("(SELECT DISTINCT s.year, 'Fall' AS semester from Section s
+    	$query = $dbh->prepare("SELECT * FROM ((SELECT DISTINCT s.year AS year, 'Fall' AS semester from Section s
                                 JOIN Semester sm on sm.semesterID = s.semesterID
-                                WHERE sm.semesterType LIKE 'Fall%'
-                                ORDER BY s.year DESC)
+                                WHERE sm.semesterType LIKE 'Fall%')
                                 UNION
-                                (SELECT DISTINCT s.year, 'Summer' AS semester from Section s
+                                (SELECT DISTINCT s.year as year, 'Summer' AS semester from Section s
                                 JOIN Semester sm on sm.semesterID = s.semesterID
-                                WHERE sm.semesterType LIKE 'Summer%'
-                                ORDER BY s.year DESC)
+                                WHERE sm.semesterType LIKE 'Summer%')
                                 UNION
-                                (SELECT DISTINCT s.year, 'Spring' AS semester from Section s
+                                (SELECT DISTINCT s.year AS year, 'Spring' AS semester from Section s
                                 JOIN Semester sm on sm.semesterID = s.semesterID
-                                WHERE sm.semesterType LIKE 'Spring%'
-                                ORDER BY s.year DESC)");
+                                WHERE sm.semesterType LIKE 'Spring%')) AS x ORDER BY x.year DESC, x.semester ASC");
         $query->execute();
         $results = $query->fetchAll(PDO::FETCH_ASSOC);
         for($i = 0; $i < sizeof($results); $i++) {

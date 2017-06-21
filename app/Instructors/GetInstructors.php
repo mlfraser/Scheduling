@@ -36,7 +36,8 @@
                                 JOIN Instructor i
                                 JOIN SectionInstructorMapping si on i.instructorID = si.instructorID AND s.sectionID = si.sectionID
                                 JOIN Semester sm on s.semesterID = sm.semesterID
-                                WHERE sm.semesterType LIKE '".$semester."%' && s.year = ".$year);
+                                WHERE sm.semesterType LIKE '".$semester."%' && s.year = ".$year." && s.isLab = 0
+                                ORDER BY i.name ASC");
         $query->execute();
         $results = $query->fetchAll(PDO::FETCH_ASSOC);
         $instructors = array();
@@ -53,7 +54,7 @@
                                     JOIN Time te on te.timeID = s.endTimeID
                                     JOIN Type t on t.typeID = s.typeID
                                     JOIN ColorCoding co on SUBSTR(s.courseID,1,1) LIKE SUBSTR(co.key, 1,1)
-                                    WHERE sm.semesterType LIKE '".$semester."%' && s.year = '".$year."' && i.instructorID = '".$r["instructorID"]."'");
+                                    WHERE sm.semesterType LIKE '".$semester."%' && s.year = '".$year."' && i.instructorID = '".$r["instructorID"]."'  && s.isLab = 0 ");
             $query->execute();
             $cResults = $query->fetchAll(PDO::FETCH_ASSOC);
             $courses = array();

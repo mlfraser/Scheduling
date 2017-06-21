@@ -1,4 +1,12 @@
 <alert message="importCtrl.message" display="importCtrl.display" alert-class="importCtrl.alertClass"></alert>
+<h1>Import New Schedule</h1>
+<p>To import a new schedule into the system, you will need to collect the EE course data from banweb. This section should help in formatting the data correctly to be used in the system.</p>
+<ol>
+    <li>First, we will need to gather the data. Copy and paste the advanced search data from the EE course listings into an Excel file, making sure to include the table headings.</li>
+    <li>The file columns should be in the following order: Select, CRN, Subj, Crse, Sec, Cmp, Cred, Title, Days, Time, Cap, Act, Rem, Instructor, Date (MM/DD), Location, Fee</li>
+    <li>Next, the file will need to be exported as a CSV file, with semicolons separating the values instead of commas. To do this in Microsoft Excel, go to File -> Options -> Advanced -> Editing Section. In this section, uncheck the box that reads "Use system separators" and put a comma for the "decimal separator" field.</li>
+    <li>Finally, save the document as a .csv file. Drag and drop or click to upload the file to import the data.</li>
+</ol>
 <form class="form-horizontal form-label-left" name="importData" novalidate>
 
     <div class="form-group">

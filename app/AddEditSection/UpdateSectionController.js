@@ -99,7 +99,7 @@ updateSectionModule.controller('UpdateSectionController', ['globalFactory', '$ti
             params.days += 'F';
         }
         
-        params.profName = self.selectedInstructor;
+        params.profName = JSON.stringify(self.selectedInstructor);
         
         
         globalFactory.addSection(params).success(function(data){

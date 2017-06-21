@@ -280,14 +280,15 @@ courseModule.directive('addRoom', ['globalFactory', '$timeout', function(globalF
     compile: function() {
       return {
         pre: function(scope, elem, attrs) {
-          
+          scope.isLab = false;
           scope.reset = function() {
             scope.buildingNumber = "";
             scope.roomNumber = "";
             scope.capacity = "";
+            scope.isLab = false;
           };
             scope.addRoom = function(){
-                 globalFactory.addRoom(scope.roomNumber, scope.buildingNumber, scope.capacity).success(function(data){
+                 globalFactory.addRoom(scope.roomNumber, scope.buildingNumber, scope.capacity, scope.isLab).success(function(data){
                     if(data.success) {
                         var room = new Object();
                         room.buildingID = scope.buildingNumber

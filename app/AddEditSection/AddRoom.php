@@ -16,6 +16,7 @@
         $roomNumber = testInput($_REQUEST['roomNumber']);
         $buildingID = testInput($_REQUEST['buildingNumber']);
         $capacity = testInput($_REQUEST['capacity']);
+        $isLab = testInput($_REQUEST['isLab']);
         
         
         
@@ -43,7 +44,7 @@
             }
             if(!isset($capacity)) $capacity = 0;
 
-            $dbh->query("INSERT INTO Room(roomNumber, buildingID, capacity) VALUES ('$roomNumber', '$buildingID', '$capacity')");
+            $dbh->query("INSERT INTO Room(roomNumber, buildingID, capacity, isLab) VALUES ('$roomNumber', '$buildingID', '$capacity', $isLab)");
             $exists = $dbh->query("SELECT * FROM Room r
                                JOIN Building b on b.buildingID = r.buildingID
                                WHERE r.roomNumber = '$roomNumber' AND b.buildingID = $buildingID");

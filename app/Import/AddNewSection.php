@@ -11,7 +11,7 @@
         include '/itss/local/home/ecescheduling/config.php';
         include '/itss/local/home/ecescheduling/public_html/resources/functions/validate.php';
         
-        //Parameters, with data propery sifted through
+        //Parameters, with data properly sifted through
         $year = testInput($_REQUEST['year']);
         $courseID = testInput($_REQUEST['courseID']);
         $courseName = testInput($_REQUEST['courseName']);
@@ -33,7 +33,7 @@
         $isLab = testInput($_REQUEST['isLab']);
         $credits = testInput($_REQUEST['credits']);
         $days = testInput($_REQUEST['days']);
-        $profName = $_REQUEST['profName'];
+        $profName = json_decode($_REQUEST['profName']);
         
     	$options = array(
     	    PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
@@ -50,7 +50,7 @@
         }
         /****************************************************************************************/
         
-        if($crn != 0) {
+        if($crn != 0 && $sectionID == 0) {
             $exists = $dbh->query("SELECT * FROM Section WHERE year = ".$year." AND crn = ".$crn." AND semesterID = ".$semesterID);
             if($exists->rowCount() > 0) throw new Exception("This course already exists.", 1);
         }
@@ -70,7 +70,6 @@
             $exists = $dbh->query("SELECT * FROM Room r
                                    JOIN Building b on b.buildingID = r.buildingID
                                    WHERE r.roomNumber LIKE '".$room."' && b.buildingID = ".$buildingID);
-            $line57 = $exists;
            
             if(($exists->rowCount()) <= 0) {
                 //Check if building exists
@@ -94,9 +93,10 @@
         /****************************************************************************************/
         if($startTimeID == "" || $startTimeID == null || !isset($startTimeID)){
             //GET START TIME DATA
+            $fullTime = formatTime($startTime);
             $exists = $dbh->query("SELECT * FROM Time WHERE timeStartEnd LIKE '$startTime'");
             if(($exists->rowCount()) <= 0) {
-                $dbh->query("INSERT INTO Time(timeStartEnd) VALUES ('$startTime')");
+                $dbh->query("INSERT INTO Time(timeStartEnd, fullTime) VALUES ('$startTime', '$fullTime')");
                 $exists = $dbh->query("SELECT * FROM Time WHERE timeStartEnd LIKE '$startTime'");
             }
             $exists = $exists->fetch();
@@ -107,9 +107,10 @@
         
         if($endTimeID == "" || $endTimeID == null || !isset($endTimeID)){
             //GET END TIME DATA
+            $fullTime = formatTime($endTime);
             $exists = $dbh->query("SELECT * FROM Time WHERE timeStartEnd LIKE '$endTime'");
             if(($exists->rowCount()) <= 0) {
-                $dbh->query("INSERT INTO Time(timeStartEnd) VALUES ('$endTime')");
+                $dbh->query("INSERT INTO Time(timeStartEnd, fullTime) VALUES ('$endTime', '$fullTime')");
                 $exists = $dbh->query("SELECT * FROM Time WHERE timeStartEnd LIKE '$endTime'");
             }
             $exists = $exists->fetch();
@@ -195,7 +196,7 @@
                 'result' => $sectionID,
                 'profname' => $profName,
                 'request' => $_REQUEST,
-                'message' => "Section was successfully updated.",
+                'message' => "Section was successfully updated."
             ),
         ));
         
@@ -209,5 +210,20 @@
         ),
     ));
     }
-
+    function formatTime($time) {
+        
+        if(substr($time, 6, 2) == "am" && substr($time, 0, 2) == "12") {
+            return "00:".substr($time, 3, 2);
+        }
+        else if(substr($time, 6, 2) == "pm" && substr($time, 0, 2) == "12") {
+            return substr($time, 0, 5);
+        }
+        else if(substr($time, 6, 2) == "pm") {
+            return (intval(substr($time, 0, 2)) + 12).substr($time, 2, 3);
+        }
+        else{
+            return substr($time, 0, 5);
+        }
+        
+    }
 ?>

@@ -122,12 +122,13 @@ importModule.controller('ImportController', ['globalFactory', '$timeout', functi
             params.sectionName = courseData[4];
             params.typeID = courseData[5] == "1" ? 1 : 2;
             params.credits = parseInt(courseData[6]);
-            params.courseTitle = courseData[7];
+            params.courseName = courseData[7];
             params.days = courseData[8];
             params.startTime = courseData[9].substr(0,8);
             params.endTime = courseData[9].substr(9,8);
             params.capacity = parseInt(courseData[10].substr(1, courseData[10].length - 1));
-            params.profName = courseData[13].split(',');
+            
+            params.profName = JSON.stringify(courseData[13].split(' , '));
             var dates = courseData[14];
             params.room = courseData[15].substr(3,4);
             params.building = courseData[15].substr(0,2);

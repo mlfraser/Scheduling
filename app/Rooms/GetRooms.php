@@ -32,11 +32,11 @@
         
     	$dbh = new PDO(DSN, DBUSER, DBPASS, $options) or die('Cannot connect to database');
     	
-    	$query = $dbh->prepare("SELECT DISTINCT r.roomID, r.roomNumber, r.capacity FROM Section s 
+    	$query = $dbh->prepare("SELECT DISTINCT r.roomID, r.roomNumber, r.capacity, b.buildingName FROM Section s 
                                 JOIN Room r on r.roomID = s.roomID
                                 JOIN Building b on b.buildingID = r.buildingID
                                 JOIN Semester sm on sm.semesterID = s.semesterID
-                                WHERE sm.semesterType LIKE '".$semester."%' AND s.year = ".$year." AND b.buildingName LIKE 'EERC' AND s.isLab = 0
+                                WHERE sm.semesterType LIKE '".$semester."%' AND s.year = ".$year." AND r.isLab = 0
                                 ORDER BY r.roomNumber"
                                 );
         $query->execute();
@@ -54,7 +54,7 @@
                                     JOIN Time ts on ts.timeID = s.startTimeID
                                     JOIN Time te on te.timeID = s.endTimeID
                                     JOIN ColorCoding co on SUBSTR(s.courseID,1,1) LIKE SUBSTR(co.key, 1,1)
-                                    WHERE r.roomID = ".$r["roomID"]);
+                                    WHERE r.roomID = ".$r["roomID"]." AND sm.semesterType LIKE '".$semester."%' AND s.year = ".$year);
             $query->execute();
             $cResults = $query->fetchAll(PDO::FETCH_ASSOC);
             $courses = array();
@@ -118,7 +118,7 @@
                     'center' => 'title',
                     'right' => 'prev,next'
                 ),
-                'titleFormat' => "[EERC ".$r["roomNumber"]." Capacity: ".$r["capacity"]."]",
+                'titleFormat' => "[".$r["buildingName"]." ".$r["roomNumber"]." Capacity: ".$r["capacity"]."]",
                 'allDaySlot' => false,
                 'minTime' => "08:00:00",
                 'maxTime' => "17:30:00",

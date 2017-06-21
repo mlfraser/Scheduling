@@ -191,14 +191,15 @@ shared.factory('globalFactory', ['$http', function($http) {
         });
     };
     
-    service.addRoom = function(roomNumber, buildingNumber, capacity) {
+    service.addRoom = function(roomNumber, buildingNumber, capacity, isLab) {
         return $http({
             url: 'app/AddEditSection/AddRoom.php',
             method: 'GET',
             params: {
                 roomNumber: roomNumber,
                 buildingNumber: buildingNumber,
-                capacity: capacity
+                capacity: capacity,
+                isLab: isLab
             },
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         });

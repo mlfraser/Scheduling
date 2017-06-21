@@ -79,7 +79,7 @@ courseModule.directive('cItem',['globalFactory', function(globalFactory){
                 
                 scope.Color = {
                     'background-color' : '#' + scope.course.Hex,
-                    'height' : scope.time + 20
+                    'height' : scope.time + 50
                 };
                 scope.getCourse = function(id) {
                     globalFactory.setCourseHistoryID(id);

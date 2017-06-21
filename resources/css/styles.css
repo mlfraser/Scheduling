@@ -88,6 +88,11 @@ border-color: #5cb85c;
     width: 75%;
 }
 
+.scrollable-div {
+    overflow: auto;
+    max-height: 100vh;
+}
+
 
 /* FORM VALIDATION*/
 input.ng-invalid.ng-touched {
